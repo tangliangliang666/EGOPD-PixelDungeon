@@ -1,0 +1,9 @@
+# 本项目按「逐字节保真」管理：禁止 Git 做任何行尾转换。
+#
+# 背景：仓库内不同文件的行尾是刻意区分的——
+#   上游 .java / .gradle / .txt  = CRLF
+#   docs/*.md、_chk/*.sh、*.py   = LF
+# 而 Windows 版 Git 默认 core.autocrlf=true 会在检出时把 LF 全部改写为 CRLF，
+# 导致 _chk/ 下的字节级核验脚本在克隆出的工作区上失效。
+# 用 -text 关闭一切转换后，克隆结果与 D:\PD 本地完全一致。
+* -text
