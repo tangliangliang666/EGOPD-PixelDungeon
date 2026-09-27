@@ -1,0 +1,43 @@
+// debug-console: standalone debug console system
+//
+// This module contains ONLY the generic, engine-agnostic half of the debug console:
+//   - classpath / jar / dex class scanning
+//   - the console entry model + provider/host interfaces
+//   - the console window (tabbed list of entries) and the DebugConsole switch
+//
+// It deliberately has NO dependency on any game type (Item/Mob/Buff/...). The host project
+// supplies an adapter implementing ConsoleHost + ConsoleProvider, so the same module can be
+// dropped into another project unchanged. See README.md for integration steps.
+
+apply plugin: 'java-library'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+java.sourceCompatibility = java.targetCompatibility = appJavaCompatibility
+
+dependencies {
+    // libGDX: rendering + input primitives used by the console window.
+    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+    // The generic noosa slim layer (Visual / Group / Component / BitmapText / PointerArea ...)
+    // plus watabou.utils.DeviceCompat. It carries no game-specific content, so depending on it
+    // does not couple this module to any particular game.
+    //
+    // This module is meant to be dropped into other projects, so the dependency is resolved
+    // in this order:
+    //   1) an extra property supplied by the host build, e.g. in gradle.properties:
+    //          debugConsoleSlimProject=:SPD-classes
+    //          (use the host's own name for its slim/noosa module)
+    //   2) the sources vendored next to this module (see `libs/` in the distributed zip),
+    //      wired automatically by the settings snippet in README.md
+    //   3) the EGOPD default project path
+    //
+    // If your slim module lives at a different path, set the property rather than editing this.
+    def slim = findProperty('debugConsoleSlimProject') ?: ':SPD-classes'
+    if (rootProject.findProject(slim) != null) {
+        api project(slim)
+    } else {
+        // no slim module in this build: fall back to plain gdx so compilation of *this module*
+        // still works when consumed as a library jar
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"
+    }
+}

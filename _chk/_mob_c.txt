@@ -1,0 +1,3229 @@
+Compiled from "Mob.java"
+public abstract class com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob extends com.shatteredpixel.shatteredpixeldungeon.actors.Char {
+  public com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob$AiState SLEEPING;
+
+  public com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob$AiState HUNTING;
+
+  public com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob$AiState INVESTIGATING;
+
+  public com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob$AiState WANDERING;
+
+  public com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob$AiState FLEEING;
+
+  public com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob$AiState PASSIVE;
+
+  public com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob$AiState state;
+
+  public java.lang.Class<? extends com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite> spriteClass;
+
+  protected int target;
+
+  public int defenseSkill;
+
+  public int EXP;
+
+  public int maxLvl;
+
+  protected com.shatteredpixel.shatteredpixeldungeon.actors.Char enemy;
+
+  protected int enemyID;
+
+  protected boolean enemySeen;
+
+  protected boolean alerted;
+
+  protected static final float TIME_TO_WAKE_UP;
+
+  protected boolean firstAdded;
+
+  public boolean geburaGrace;
+
+  public boolean geburaUsed;
+
+  public boolean geburaStagger;
+
+  private static final java.lang.String STATE;
+
+  private static final java.lang.String SEEN;
+
+  private static final java.lang.String TARGET;
+
+  private static final java.lang.String MAX_LVL;
+
+  private static final java.lang.String ENEMY_ID;
+
+  protected boolean intelligentAlly;
+
+  protected java.lang.Object loot;
+
+  protected float lootChance;
+
+  protected java.util.ArrayList<com.shatteredpixel.shatteredpixeldungeon.actors.Char> recentlyAttackedBy;
+
+  private static java.util.ArrayList<com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob> heldAllies;
+
+  public com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob();
+    Code:
+       0: aload_0
+       1: invokespecial #11                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char."<init>":()V
+       4: aload_0
+       5: bipush        -20
+       7: putfield      #19                 // Field actPriority:I
+      10: aload_0
+      11: getstatic     #23                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      14: putfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      17: aload_0
+      18: new           #32                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Sleeping
+      21: dup
+      22: aload_0
+      23: invokespecial #34                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Sleeping."<init>":(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+      26: putfield      #37                 // Field SLEEPING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      29: aload_0
+      30: new           #41                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Hunting
+      33: dup
+      34: aload_0
+      35: invokespecial #43                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Hunting."<init>":(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+      38: putfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      41: aload_0
+      42: new           #47                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Investigating
+      45: dup
+      46: aload_0
+      47: invokespecial #49                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Investigating."<init>":(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+      50: putfield      #50                 // Field INVESTIGATING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      53: aload_0
+      54: new           #53                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Wandering
+      57: dup
+      58: aload_0
+      59: invokespecial #55                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Wandering."<init>":(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+      62: putfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      65: aload_0
+      66: new           #59                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Fleeing
+      69: dup
+      70: aload_0
+      71: invokespecial #61                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Fleeing."<init>":(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+      74: putfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      77: aload_0
+      78: new           #65                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Passive
+      81: dup
+      82: aload_0
+      83: invokespecial #67                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$Passive."<init>":(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+      86: putfield      #68                 // Field PASSIVE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      89: aload_0
+      90: aload_0
+      91: getfield      #37                 // Field SLEEPING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      94: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      97: aload_0
+      98: iconst_m1
+      99: putfield      #74                 // Field target:I
+     102: aload_0
+     103: iconst_0
+     104: putfield      #77                 // Field defenseSkill:I
+     107: aload_0
+     108: iconst_1
+     109: putfield      #80                 // Field EXP:I
+     112: aload_0
+     113: bipush        29
+     115: putfield      #85                 // Field maxLvl:I
+     118: aload_0
+     119: iconst_m1
+     120: putfield      #88                 // Field enemyID:I
+     123: aload_0
+     124: iconst_0
+     125: putfield      #91                 // Field alerted:Z
+     128: aload_0
+     129: iconst_1
+     130: putfield      #95                 // Field firstAdded:Z
+     133: aload_0
+     134: iconst_0
+     135: putfield      #98                 // Field geburaGrace:Z
+     138: aload_0
+     139: iconst_0
+     140: putfield      #101                // Field geburaUsed:Z
+     143: aload_0
+     144: iconst_0
+     145: putfield      #104                // Field geburaStagger:Z
+     148: aload_0
+     149: iconst_0
+     150: putfield      #107                // Field intelligentAlly:Z
+     153: aload_0
+     154: aconst_null
+     155: putfield      #110                // Field loot:Ljava/lang/Object;
+     158: aload_0
+     159: fconst_0
+     160: putfield      #114                // Field lootChance:F
+     163: aload_0
+     164: new           #118                // class java/util/ArrayList
+     167: dup
+     168: invokespecial #120                // Method java/util/ArrayList."<init>":()V
+     171: putfield      #121                // Field recentlyAttackedBy:Ljava/util/ArrayList;
+     174: return
+
+  protected void onAdd();
+    Code:
+       0: aload_0
+       1: getfield      #95                 // Field firstAdded:Z
+       4: ifeq          67
+       7: aload_0
+       8: getfield      #125                // Field HP:I
+      11: i2f
+      12: aload_0
+      13: getfield      #128                // Field HT:I
+      16: i2f
+      17: fdiv
+      18: fstore_1
+      19: aload_0
+      20: aload_0
+      21: getfield      #128                // Field HT:I
+      24: i2f
+      25: aload_0
+      26: invokestatic  #131                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/AscensionChallenge.statModifier:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)F
+      29: fmul
+      30: invokestatic  #137                // Method java/lang/Math.round:(F)I
+      33: putfield      #128                // Field HT:I
+      36: aload_0
+      37: aload_0
+      38: aload_0
+      39: getfield      #128                // Field HT:I
+      42: invokestatic  #143                // Method com/shatteredpixel/shatteredpixeldungeon/Trials.modifyMobHT:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;I)I
+      45: putfield      #128                // Field HT:I
+      48: aload_0
+      49: aload_0
+      50: getfield      #128                // Field HT:I
+      53: i2f
+      54: fload_1
+      55: fmul
+      56: invokestatic  #137                // Method java/lang/Math.round:(F)I
+      59: putfield      #125                // Field HP:I
+      62: aload_0
+      63: iconst_0
+      64: putfield      #95                 // Field firstAdded:Z
+      67: aload_0
+      68: invokestatic  #149                // Method com/shatteredpixel/shatteredpixeldungeon/Trials.bindMobPassives:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+      71: return
+
+  public void storeInBundle(com.watabou.utils.Bundle);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #152                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.storeInBundle:(Lcom/watabou/utils/Bundle;)V
+       5: aload_0
+       6: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+       9: aload_0
+      10: getfield      #37                 // Field SLEEPING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      13: if_acmpne     27
+      16: aload_1
+      17: ldc           #156                // String state
+      19: ldc           #157                // String SLEEPING
+      21: invokevirtual #158                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;Ljava/lang/String;)V
+      24: goto          134
+      27: aload_0
+      28: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      31: aload_0
+      32: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      35: if_acmpne     49
+      38: aload_1
+      39: ldc           #156                // String state
+      41: ldc           #164                // String WANDERING
+      43: invokevirtual #158                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;Ljava/lang/String;)V
+      46: goto          134
+      49: aload_0
+      50: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      53: aload_0
+      54: getfield      #50                 // Field INVESTIGATING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      57: if_acmpne     71
+      60: aload_1
+      61: ldc           #156                // String state
+      63: ldc           #165                // String INVESTIGATING
+      65: invokevirtual #158                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;Ljava/lang/String;)V
+      68: goto          134
+      71: aload_0
+      72: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      75: aload_0
+      76: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      79: if_acmpne     93
+      82: aload_1
+      83: ldc           #156                // String state
+      85: ldc           #166                // String HUNTING
+      87: invokevirtual #158                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;Ljava/lang/String;)V
+      90: goto          134
+      93: aload_0
+      94: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      97: aload_0
+      98: getfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     101: if_acmpne     115
+     104: aload_1
+     105: ldc           #156                // String state
+     107: ldc           #167                // String FLEEING
+     109: invokevirtual #158                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;Ljava/lang/String;)V
+     112: goto          134
+     115: aload_0
+     116: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     119: aload_0
+     120: getfield      #68                 // Field PASSIVE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     123: if_acmpne     134
+     126: aload_1
+     127: ldc           #156                // String state
+     129: ldc           #168                // String PASSIVE
+     131: invokevirtual #158                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;Ljava/lang/String;)V
+     134: aload_1
+     135: ldc           #169                // String seen
+     137: aload_0
+     138: getfield      #171                // Field enemySeen:Z
+     141: invokevirtual #174                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;Z)V
+     144: aload_1
+     145: ldc           #177                // String target
+     147: aload_0
+     148: getfield      #74                 // Field target:I
+     151: invokevirtual #178                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;I)V
+     154: aload_1
+     155: ldc           #181                // String max_lvl
+     157: aload_0
+     158: getfield      #85                 // Field maxLvl:I
+     161: invokevirtual #178                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;I)V
+     164: aload_0
+     165: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     168: ifnull        184
+     171: aload_1
+     172: ldc           #187                // String enemy_id
+     174: aload_0
+     175: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     178: invokevirtual #189                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.id:()I
+     181: invokevirtual #178                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;I)V
+     184: return
+
+  public void restoreFromBundle(com.watabou.utils.Bundle);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #193                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.restoreFromBundle:(Lcom/watabou/utils/Bundle;)V
+       5: aload_1
+       6: ldc           #156                // String state
+       8: invokevirtual #196                // Method com/watabou/utils/Bundle.getString:(Ljava/lang/String;)Ljava/lang/String;
+      11: astore_2
+      12: aload_2
+      13: ldc           #157                // String SLEEPING
+      15: invokevirtual #200                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      18: ifeq          32
+      21: aload_0
+      22: aload_0
+      23: getfield      #37                 // Field SLEEPING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      26: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      29: goto          129
+      32: aload_2
+      33: ldc           #164                // String WANDERING
+      35: invokevirtual #200                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      38: ifeq          52
+      41: aload_0
+      42: aload_0
+      43: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      46: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      49: goto          129
+      52: aload_2
+      53: ldc           #165                // String INVESTIGATING
+      55: invokevirtual #200                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      58: ifeq          72
+      61: aload_0
+      62: aload_0
+      63: getfield      #50                 // Field INVESTIGATING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      66: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      69: goto          129
+      72: aload_2
+      73: ldc           #166                // String HUNTING
+      75: invokevirtual #200                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      78: ifeq          92
+      81: aload_0
+      82: aload_0
+      83: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      86: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      89: goto          129
+      92: aload_2
+      93: ldc           #167                // String FLEEING
+      95: invokevirtual #200                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      98: ifeq          112
+     101: aload_0
+     102: aload_0
+     103: getfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     106: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     109: goto          129
+     112: aload_2
+     113: ldc           #168                // String PASSIVE
+     115: invokevirtual #200                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     118: ifeq          129
+     121: aload_0
+     122: aload_0
+     123: getfield      #68                 // Field PASSIVE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     126: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     129: aload_0
+     130: aload_1
+     131: ldc           #169                // String seen
+     133: invokevirtual #206                // Method com/watabou/utils/Bundle.getBoolean:(Ljava/lang/String;)Z
+     136: putfield      #171                // Field enemySeen:Z
+     139: aload_0
+     140: aload_1
+     141: ldc           #177                // String target
+     143: invokevirtual #210                // Method com/watabou/utils/Bundle.getInt:(Ljava/lang/String;)I
+     146: putfield      #74                 // Field target:I
+     149: aload_1
+     150: ldc           #181                // String max_lvl
+     152: invokevirtual #214                // Method com/watabou/utils/Bundle.contains:(Ljava/lang/String;)Z
+     155: ifeq          168
+     158: aload_0
+     159: aload_1
+     160: ldc           #181                // String max_lvl
+     162: invokevirtual #210                // Method com/watabou/utils/Bundle.getInt:(Ljava/lang/String;)I
+     165: putfield      #85                 // Field maxLvl:I
+     168: aload_1
+     169: ldc           #187                // String enemy_id
+     171: invokevirtual #214                // Method com/watabou/utils/Bundle.contains:(Ljava/lang/String;)Z
+     174: ifeq          187
+     177: aload_0
+     178: aload_1
+     179: ldc           #187                // String enemy_id
+     181: invokevirtual #210                // Method com/watabou/utils/Bundle.getInt:(Ljava/lang/String;)I
+     184: putfield      #88                 // Field enemyID:I
+     187: aload_0
+     188: iconst_0
+     189: putfield      #95                 // Field firstAdded:Z
+     192: return
+
+  public void restoreEnemy();
+    Code:
+       0: aload_0
+       1: getfield      #88                 // Field enemyID:I
+       4: iconst_m1
+       5: if_icmpeq     29
+       8: aload_0
+       9: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+      12: ifnonnull     29
+      15: aload_0
+      16: aload_0
+      17: getfield      #88                 // Field enemyID:I
+      20: invokestatic  #217                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Actor.findById:(I)Lcom/shatteredpixel/shatteredpixeldungeon/actors/Actor;
+      23: checkcast     #12                 // class com/shatteredpixel/shatteredpixeldungeon/actors/Char
+      26: putfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+      29: return
+
+  public com.shatteredpixel.shatteredpixeldungeon.sprites.CharSprite sprite();
+    Code:
+       0: aload_0
+       1: getfield      #221                // Field spriteClass:Ljava/lang/Class;
+       4: invokestatic  #225                // Method com/watabou/utils/Reflection.newInstance:(Ljava/lang/Class;)Ljava/lang/Object;
+       7: checkcast     #231                // class com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite
+      10: areturn
+
+  protected boolean act();
+    Code:
+       0: aload_0
+       1: invokespecial #233                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.act:()Z
+       4: pop
+       5: aload_0
+       6: getfield      #91                 // Field alerted:Z
+       9: istore_1
+      10: aload_0
+      11: iconst_0
+      12: putfield      #91                 // Field alerted:Z
+      15: iload_1
+      16: ifeq          29
+      19: aload_0
+      20: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      23: invokevirtual #241                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.showAlert:()V
+      26: goto          50
+      29: aload_0
+      30: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      33: invokevirtual #244                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.hideAlert:()V
+      36: aload_0
+      37: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      40: invokevirtual #247                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.hideLost:()V
+      43: aload_0
+      44: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      47: invokevirtual #250                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.hideInvestigate:()V
+      50: aload_0
+      51: getfield      #253                // Field paralysed:I
+      54: ifle          69
+      57: aload_0
+      58: iconst_0
+      59: putfield      #171                // Field enemySeen:Z
+      62: aload_0
+      63: fconst_1
+      64: invokevirtual #1                  // Method spend:(F)V
+      67: iconst_1
+      68: ireturn
+      69: aload_0
+      70: invokevirtual #256                // Method consumeGeburaStagger:()Z
+      73: ifeq          83
+      76: aload_0
+      77: fconst_1
+      78: invokevirtual #1                  // Method spend:(F)V
+      81: iconst_1
+      82: ireturn
+      83: aload_0
+      84: ldc_w         #259                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Terror
+      87: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      90: ifnonnull     103
+      93: aload_0
+      94: ldc_w         #265                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Dread
+      97: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     100: ifnull        111
+     103: aload_0
+     104: aload_0
+     105: getfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     108: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     111: aload_0
+     112: aload_0
+     113: invokevirtual #267                // Method chooseEnemy:()Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     116: putfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     119: aload_0
+     120: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     123: ifnull        165
+     126: aload_0
+     127: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     130: invokevirtual #271                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.isAlive:()Z
+     133: ifeq          165
+     136: aload_0
+     137: getfield      #274                // Field fieldOfView:[Z
+     140: aload_0
+     141: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     144: getfield      #278                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+     147: baload
+     148: ifeq          165
+     151: aload_0
+     152: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     155: getfield      #281                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.invisible:I
+     158: ifgt          165
+     161: iconst_1
+     162: goto          166
+     165: iconst_0
+     166: istore_2
+     167: aload_0
+     168: ldc_w         #284                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/duelist/Feint$AfterImage$FeintConfusion
+     171: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     174: ifnull        189
+     177: aload_0
+     178: iload_2
+     179: putfield      #171                // Field enemySeen:Z
+     182: aload_0
+     183: fconst_1
+     184: invokevirtual #1                  // Method spend:(F)V
+     187: iconst_1
+     188: ireturn
+     189: aload_0
+     190: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     193: iload_2
+     194: iload_1
+     195: invokeinterface #286,  3          // InterfaceMethod com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState.act:(ZZ)Z
+     200: istore_3
+     201: aload_0
+     202: ldc_w         #291                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff
+     205: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     208: ifnull        243
+     211: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     214: aload_0
+     215: aload_0
+     216: getfield      #274                // Field fieldOfView:[Z
+     219: invokevirtual #299                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.updateFieldOfView:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;[Z)V
+     222: aload_0
+     223: getfield      #305                // Field pos:I
+     226: aload_0
+     227: getfield      #306                // Field viewDistance:I
+     230: aload_0
+     231: invokevirtual #309                // Method speed:()F
+     234: f2d
+     235: invokestatic  #313                // Method java/lang/Math.ceil:(D)D
+     238: d2i
+     239: iadd
+     240: invokestatic  #317                // Method com/shatteredpixel/shatteredpixeldungeon/scenes/GameScene.updateFog:(II)V
+     243: iload_3
+     244: ireturn
+
+  protected com.shatteredpixel.shatteredpixeldungeon.actors.Char chooseEnemy();
+    Code:
+       0: aload_0
+       1: ldc_w         #265                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Dread
+       4: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+       7: checkcast     #265                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Dread
+      10: astore_1
+      11: aload_1
+      12: ifnull        32
+      15: aload_1
+      16: getfield      #323                // Field com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Dread.object:I
+      19: invokestatic  #217                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Actor.findById:(I)Lcom/shatteredpixel/shatteredpixeldungeon/actors/Actor;
+      22: checkcast     #12                 // class com/shatteredpixel/shatteredpixeldungeon/actors/Char
+      25: astore_2
+      26: aload_2
+      27: ifnull        32
+      30: aload_2
+      31: areturn
+      32: aload_0
+      33: ldc_w         #259                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Terror
+      36: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      39: checkcast     #259                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Terror
+      42: astore_2
+      43: aload_2
+      44: ifnull        64
+      47: aload_2
+      48: getfield      #326                // Field com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Terror.object:I
+      51: invokestatic  #217                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Actor.findById:(I)Lcom/shatteredpixel/shatteredpixeldungeon/actors/Actor;
+      54: checkcast     #12                 // class com/shatteredpixel/shatteredpixeldungeon/actors/Char
+      57: astore_3
+      58: aload_3
+      59: ifnull        64
+      62: aload_3
+      63: areturn
+      64: aload_0
+      65: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      68: getstatic     #23                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      71: if_acmpeq     84
+      74: aload_0
+      75: ldc_w         #327                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Amok
+      78: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      81: ifnull        210
+      84: aload_0
+      85: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      88: aload_0
+      89: getfield      #68                 // Field PASSIVE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      92: if_acmpeq     210
+      95: aload_0
+      96: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      99: aload_0
+     100: getfield      #37                 // Field SLEEPING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     103: if_acmpeq     210
+     106: aload_0
+     107: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     110: ifnull        139
+     113: aload_0
+     114: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     117: ldc_w         #329                // class com/shatteredpixel/shatteredpixeldungeon/items/stones/StoneOfAggression$Aggression
+     120: invokevirtual #331                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     123: ifnull        139
+     126: aload_0
+     127: aload_0
+     128: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     131: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     134: aload_0
+     135: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     138: areturn
+     139: invokestatic  #332                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Actor.chars:()Ljava/util/HashSet;
+     142: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+     145: astore_3
+     146: aload_3
+     147: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     152: ifeq          210
+     155: aload_3
+     156: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     161: checkcast     #12                 // class com/shatteredpixel/shatteredpixeldungeon/actors/Char
+     164: astore        4
+     166: aload         4
+     168: aload_0
+     169: if_acmpeq     207
+     172: aload_0
+     173: getfield      #274                // Field fieldOfView:[Z
+     176: aload         4
+     178: getfield      #278                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+     181: baload
+     182: ifeq          207
+     185: aload         4
+     187: ldc_w         #329                // class com/shatteredpixel/shatteredpixeldungeon/items/stones/StoneOfAggression$Aggression
+     190: invokevirtual #331                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     193: ifnull        207
+     196: aload_0
+     197: aload_0
+     198: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     201: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     204: aload         4
+     206: areturn
+     207: goto          146
+     210: iconst_0
+     211: istore_3
+     212: aload_0
+     213: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     216: ifnull        253
+     219: aload_0
+     220: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     223: invokevirtual #271                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.isAlive:()Z
+     226: ifeq          253
+     229: invokestatic  #332                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Actor.chars:()Ljava/util/HashSet;
+     232: aload_0
+     233: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     236: invokevirtual #351                // Method java/util/HashSet.contains:(Ljava/lang/Object;)Z
+     239: ifeq          253
+     242: aload_0
+     243: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     246: aload_0
+     247: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     250: if_acmpne     258
+     253: iconst_1
+     254: istore_3
+     255: goto          318
+     258: aload_0
+     259: ldc_w         #327                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Amok
+     262: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     265: ifnull        283
+     268: aload_0
+     269: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     272: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     275: if_acmpne     283
+     278: iconst_1
+     279: istore_3
+     280: goto          318
+     283: aload_0
+     284: ldc_w         #357                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Charm
+     287: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     290: ifnull        318
+     293: aload_0
+     294: ldc_w         #357                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Charm
+     297: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     300: checkcast     #357                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Charm
+     303: getfield      #359                // Field com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Charm.object:I
+     306: aload_0
+     307: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     310: invokevirtual #189                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.id:()I
+     313: if_icmpne     318
+     316: iconst_1
+     317: istore_3
+     318: iload_3
+     319: ifne          366
+     322: aload_0
+     323: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     326: getstatic     #360                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ALLY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     329: if_acmpne     366
+     332: aload_0
+     333: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     336: getfield      #363                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     339: getstatic     #360                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ALLY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     342: if_acmpne     350
+     345: iconst_1
+     346: istore_3
+     347: goto          366
+     350: aload_0
+     351: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     354: aload_0
+     355: invokevirtual #364                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+     358: invokevirtual #370                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.isInvulnerable:(Ljava/lang/Class;)Z
+     361: ifeq          366
+     364: iconst_1
+     365: istore_3
+     366: iload_3
+     367: ifeq          1236
+     370: new           #337                // class java/util/HashSet
+     373: dup
+     374: invokespecial #374                // Method java/util/HashSet."<init>":()V
+     377: astore        4
+     379: aload_0
+     380: ldc_w         #327                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Amok
+     383: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     386: ifnull        604
+     389: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     392: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+     395: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+     398: astore        5
+     400: aload         5
+     402: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     407: ifeq          471
+     410: aload         5
+     412: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     417: checkcast     #2                  // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+     420: astore        6
+     422: aload         6
+     424: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     427: getstatic     #23                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     430: if_acmpne     468
+     433: aload         6
+     435: aload_0
+     436: if_acmpeq     468
+     439: aload_0
+     440: getfield      #274                // Field fieldOfView:[Z
+     443: aload         6
+     445: getfield      #305                // Field pos:I
+     448: baload
+     449: ifeq          468
+     452: aload         6
+     454: getfield      #379                // Field invisible:I
+     457: ifgt          468
+     460: aload         4
+     462: aload         6
+     464: invokevirtual #380                // Method java/util/HashSet.add:(Ljava/lang/Object;)Z
+     467: pop
+     468: goto          400
+     471: aload         4
+     473: invokevirtual #383                // Method java/util/HashSet.isEmpty:()Z
+     476: ifeq          869
+     479: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     482: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+     485: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+     488: astore        5
+     490: aload         5
+     492: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     497: ifeq          561
+     500: aload         5
+     502: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     507: checkcast     #2                  // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+     510: astore        6
+     512: aload         6
+     514: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     517: getstatic     #360                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ALLY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     520: if_acmpne     558
+     523: aload         6
+     525: aload_0
+     526: if_acmpeq     558
+     529: aload_0
+     530: getfield      #274                // Field fieldOfView:[Z
+     533: aload         6
+     535: getfield      #305                // Field pos:I
+     538: baload
+     539: ifeq          558
+     542: aload         6
+     544: getfield      #379                // Field invisible:I
+     547: ifgt          558
+     550: aload         4
+     552: aload         6
+     554: invokevirtual #380                // Method java/util/HashSet.add:(Ljava/lang/Object;)Z
+     557: pop
+     558: goto          490
+     561: aload         4
+     563: invokevirtual #383                // Method java/util/HashSet.isEmpty:()Z
+     566: ifeq          869
+     569: aload_0
+     570: getfield      #274                // Field fieldOfView:[Z
+     573: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     576: getfield      #386                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pos:I
+     579: baload
+     580: ifeq          869
+     583: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     586: getfield      #387                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.invisible:I
+     589: ifgt          869
+     592: aload         4
+     594: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     597: invokevirtual #380                // Method java/util/HashSet.add:(Ljava/lang/Object;)Z
+     600: pop
+     601: goto          869
+     604: aload_0
+     605: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     608: getstatic     #360                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ALLY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     611: if_acmpne     751
+     614: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     617: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+     620: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+     623: astore        5
+     625: aload         5
+     627: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     632: ifeq          748
+     635: aload         5
+     637: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     642: checkcast     #2                  // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+     645: astore        6
+     647: aload         6
+     649: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     652: getstatic     #23                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     655: if_acmpne     745
+     658: aload_0
+     659: getfield      #274                // Field fieldOfView:[Z
+     662: aload         6
+     664: getfield      #305                // Field pos:I
+     667: baload
+     668: ifeq          745
+     671: aload         6
+     673: getfield      #379                // Field invisible:I
+     676: ifgt          745
+     679: aload         6
+     681: aload_0
+     682: invokevirtual #364                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+     685: invokevirtual #388                // Method isInvulnerable:(Ljava/lang/Class;)Z
+     688: ifne          745
+     691: aload         6
+     693: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     696: aload         6
+     698: getfield      #68                 // Field PASSIVE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     701: if_acmpeq     745
+     704: aload_0
+     705: getfield      #107                // Field intelligentAlly:Z
+     708: ifeq          737
+     711: aload         6
+     713: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     716: aload         6
+     718: getfield      #37                 // Field SLEEPING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     721: if_acmpeq     745
+     724: aload         6
+     726: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     729: aload         6
+     731: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     734: if_acmpeq     745
+     737: aload         4
+     739: aload         6
+     741: invokevirtual #380                // Method java/util/HashSet.add:(Ljava/lang/Object;)Z
+     744: pop
+     745: goto          625
+     748: goto          869
+     751: aload_0
+     752: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     755: getstatic     #23                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     758: if_acmpne     869
+     761: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     764: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+     767: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+     770: astore        5
+     772: aload         5
+     774: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     779: ifeq          837
+     782: aload         5
+     784: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     789: checkcast     #2                  // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+     792: astore        6
+     794: aload         6
+     796: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     799: getstatic     #360                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ALLY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     802: if_acmpne     834
+     805: aload_0
+     806: getfield      #274                // Field fieldOfView:[Z
+     809: aload         6
+     811: getfield      #305                // Field pos:I
+     814: baload
+     815: ifeq          834
+     818: aload         6
+     820: getfield      #379                // Field invisible:I
+     823: ifgt          834
+     826: aload         4
+     828: aload         6
+     830: invokevirtual #380                // Method java/util/HashSet.add:(Ljava/lang/Object;)Z
+     833: pop
+     834: goto          772
+     837: aload_0
+     838: getfield      #274                // Field fieldOfView:[Z
+     841: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     844: getfield      #386                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pos:I
+     847: baload
+     848: ifeq          869
+     851: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     854: getfield      #387                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.invisible:I
+     857: ifgt          869
+     860: aload         4
+     862: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     865: invokevirtual #380                // Method java/util/HashSet.add:(Ljava/lang/Object;)Z
+     868: pop
+     869: aload_0
+     870: ldc_w         #357                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Charm
+     873: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     876: checkcast     #357                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Charm
+     879: astore        5
+     881: aload         5
+     883: ifnull        931
+     886: aload         5
+     888: getfield      #359                // Field com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Charm.object:I
+     891: invokestatic  #217                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Actor.findById:(I)Lcom/shatteredpixel/shatteredpixeldungeon/actors/Actor;
+     894: checkcast     #12                 // class com/shatteredpixel/shatteredpixeldungeon/actors/Char
+     897: astore        6
+     899: aload         6
+     901: ifnull        931
+     904: aload         4
+     906: aload         6
+     908: invokevirtual #351                // Method java/util/HashSet.contains:(Ljava/lang/Object;)Z
+     911: ifeq          931
+     914: aload         4
+     916: invokevirtual #389                // Method java/util/HashSet.size:()I
+     919: iconst_1
+     920: if_icmple     931
+     923: aload         4
+     925: aload         6
+     927: invokevirtual #392                // Method java/util/HashSet.remove:(Ljava/lang/Object;)Z
+     930: pop
+     931: aload         4
+     933: invokevirtual #383                // Method java/util/HashSet.isEmpty:()Z
+     936: ifeq          941
+     939: aconst_null
+     940: areturn
+     941: aload_0
+     942: getfield      #305                // Field pos:I
+     945: aload_0
+     946: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     949: getfield      #395                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.passable:[Z
+     952: aload_0
+     953: getfield      #274                // Field fieldOfView:[Z
+     956: iconst_1
+     957: invokestatic  #398                // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.findPassable:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;[Z[ZZ)[Z
+     960: invokestatic  #402                // Method com/watabou/utils/PathFinder.buildDistanceMap:(I[Z)V
+     963: aconst_null
+     964: astore        6
+     966: ldc_w         #410                // int 2147483647
+     969: istore        7
+     971: aload         4
+     973: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+     976: astore        8
+     978: aload         8
+     980: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     985: ifeq          1178
+     988: aload         8
+     990: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     995: checkcast     #12                 // class com/shatteredpixel/shatteredpixeldungeon/actors/Char
+     998: astore        9
+    1000: ldc_w         #410                // int 2147483647
+    1003: istore        10
+    1005: getstatic     #411                // Field com/watabou/utils/PathFinder.NEIGHBOURS8:[I
+    1008: astore        11
+    1010: aload         11
+    1012: arraylength
+    1013: istore        12
+    1015: iconst_0
+    1016: istore        13
+    1018: iload         13
+    1020: iload         12
+    1022: if_icmpge     1069
+    1025: aload         11
+    1027: iload         13
+    1029: iaload
+    1030: istore        14
+    1032: getstatic     #415                // Field com/watabou/utils/PathFinder.distance:[I
+    1035: aload         9
+    1037: getfield      #278                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+    1040: iload         14
+    1042: iadd
+    1043: iaload
+    1044: iload         10
+    1046: if_icmpge     1063
+    1049: getstatic     #415                // Field com/watabou/utils/PathFinder.distance:[I
+    1052: aload         9
+    1054: getfield      #278                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+    1057: iload         14
+    1059: iadd
+    1060: iaload
+    1061: istore        10
+    1063: iinc          13, 1
+    1066: goto          1018
+    1069: aload         6
+    1071: ifnonnull     1085
+    1074: aload         9
+    1076: astore        6
+    1078: iload         10
+    1080: istore        7
+    1082: goto          1175
+    1085: aload_0
+    1086: aload         6
+    1088: invokevirtual #418                // Method canAttack:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+    1091: ifeq          1106
+    1094: aload_0
+    1095: aload         9
+    1097: invokevirtual #418                // Method canAttack:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+    1100: ifne          1106
+    1103: goto          978
+    1106: aload_0
+    1107: aload         9
+    1109: invokevirtual #418                // Method canAttack:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+    1112: ifeq          1124
+    1115: aload_0
+    1116: aload         6
+    1118: invokevirtual #418                // Method canAttack:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+    1121: ifeq          1131
+    1124: iload         10
+    1126: iload         7
+    1128: if_icmpge     1138
+    1131: aload         9
+    1133: astore        6
+    1135: goto          1175
+    1138: aload         9
+    1140: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+    1143: if_acmpne     1153
+    1146: iload         10
+    1148: iload         7
+    1150: if_icmpeq     1171
+    1153: aload_0
+    1154: aload         9
+    1156: invokevirtual #418                // Method canAttack:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+    1159: ifeq          1175
+    1162: aload_0
+    1163: aload         6
+    1165: invokevirtual #418                // Method canAttack:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+    1168: ifeq          1175
+    1171: aload         9
+    1173: astore        6
+    1175: goto          978
+    1178: aload         6
+    1180: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+    1183: if_acmpne     1233
+    1186: aload         4
+    1188: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+    1191: astore        8
+    1193: aload         8
+    1195: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+    1200: ifeq          1233
+    1203: aload         8
+    1205: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+    1210: checkcast     #12                 // class com/shatteredpixel/shatteredpixeldungeon/actors/Char
+    1213: astore        9
+    1215: aload         9
+    1217: instanceof    #422                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/duelist/Feint$AfterImage
+    1220: ifeq          1230
+    1223: aload         9
+    1225: astore        6
+    1227: goto          1233
+    1230: goto          1193
+    1233: aload         6
+    1235: areturn
+    1236: aload_0
+    1237: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+    1240: areturn
+
+  public boolean add(com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #424                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.add:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;)Z
+       5: ifeq          82
+       8: aload_1
+       9: instanceof    #327                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Amok
+      12: ifne          22
+      15: aload_1
+      16: instanceof    #427                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/AllyBuff
+      19: ifeq          33
+      22: aload_0
+      23: aload_0
+      24: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      27: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      30: goto          80
+      33: aload_1
+      34: instanceof    #259                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Terror
+      37: ifne          47
+      40: aload_1
+      41: instanceof    #265                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Dread
+      44: ifeq          58
+      47: aload_0
+      48: aload_0
+      49: getfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      52: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      55: goto          80
+      58: aload_1
+      59: instanceof    #429                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Sleep
+      62: ifeq          80
+      65: aload_0
+      66: aload_0
+      67: getfield      #37                 // Field SLEEPING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      70: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      73: aload_0
+      74: ldc_w         #431                // float 1.5f
+      77: invokevirtual #432                // Method postpone:(F)V
+      80: iconst_1
+      81: ireturn
+      82: iconst_0
+      83: ireturn
+
+  public boolean remove(com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #435                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.remove:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;)Z
+       5: ifeq          106
+       8: aload_0
+       9: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      12: aload_0
+      13: getfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      16: if_acmpne     104
+      19: aload_1
+      20: instanceof    #259                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Terror
+      23: ifeq          36
+      26: aload_0
+      27: ldc_w         #265                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Dread
+      30: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      33: ifnull        53
+      36: aload_1
+      37: instanceof    #265                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Dread
+      40: ifeq          104
+      43: aload_0
+      44: ldc_w         #259                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Terror
+      47: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      50: ifnonnull     104
+      53: aload_0
+      54: getfield      #171                // Field enemySeen:Z
+      57: ifeq          96
+      60: aload_0
+      61: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      64: ldc_w         #437                // int 16746496
+      67: aload_0
+      68: ldc_w         #438                // String rage
+      71: iconst_0
+      72: anewarray     #365                // class java/lang/Object
+      75: invokestatic  #440                // Method com/shatteredpixel/shatteredpixeldungeon/messages/Messages.get:(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      78: iconst_0
+      79: anewarray     #365                // class java/lang/Object
+      82: invokevirtual #446                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.showStatus:(ILjava/lang/String;[Ljava/lang/Object;)V
+      85: aload_0
+      86: aload_0
+      87: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      90: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      93: goto          104
+      96: aload_0
+      97: aload_0
+      98: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     101: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     104: iconst_1
+     105: ireturn
+     106: iconst_0
+     107: ireturn
+
+  protected boolean canAttack(com.shatteredpixel.shatteredpixeldungeon.actors.Char);
+    Code:
+       0: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+       3: aload_0
+       4: getfield      #305                // Field pos:I
+       7: aload_1
+       8: getfield      #278                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+      11: invokevirtual #450                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.adjacent:(II)Z
+      14: ifeq          19
+      17: iconst_1
+      18: ireturn
+      19: aload_0
+      20: ldc_w         #453                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/ChampionEnemy
+      23: invokevirtual #455                // Method buffs:(Ljava/lang/Class;)Ljava/util/HashSet;
+      26: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+      29: astore_2
+      30: aload_2
+      31: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      36: ifeq          62
+      39: aload_2
+      40: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      45: checkcast     #453                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/ChampionEnemy
+      48: astore_3
+      49: aload_3
+      50: aload_1
+      51: invokevirtual #459                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/ChampionEnemy.canAttackWithExtraReach:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+      54: ifeq          59
+      57: iconst_1
+      58: ireturn
+      59: goto          30
+      62: iconst_0
+      63: ireturn
+
+  private boolean cellIsPathable(int);
+    Code:
+       0: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+       3: getfield      #395                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.passable:[Z
+       6: iload_1
+       7: baload
+       8: ifne          43
+      11: aload_0
+      12: getfield      #462                // Field flying:Z
+      15: ifne          28
+      18: aload_0
+      19: ldc_w         #327                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Amok
+      22: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      25: ifnull        41
+      28: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      31: getfield      #465                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.avoid:[Z
+      34: iload_1
+      35: baload
+      36: ifne          43
+      39: iconst_0
+      40: ireturn
+      41: iconst_0
+      42: ireturn
+      43: aload_0
+      44: getstatic     #468                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Property.LARGE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Property;
+      47: invokestatic  #474                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.hasProp:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Property;)Z
+      50: ifeq          66
+      53: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      56: getfield      #478                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.openSpace:[Z
+      59: iload_1
+      60: baload
+      61: ifne          66
+      64: iconst_0
+      65: ireturn
+      66: iload_1
+      67: invokestatic  #481                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Actor.findChar:(I)Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+      70: ifnull        75
+      73: iconst_0
+      74: ireturn
+      75: iconst_1
+      76: ireturn
+
+  protected boolean getCloser(int);
+    Code:
+       0: aload_0
+       1: getfield      #485                // Field rooted:Z
+       4: ifne          25
+       7: iload_1
+       8: aload_0
+       9: getfield      #305                // Field pos:I
+      12: if_icmpeq     25
+      15: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      18: iload_1
+      19: invokevirtual #488                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.insideMap:(I)Z
+      22: ifne          27
+      25: iconst_0
+      26: ireturn
+      27: iconst_m1
+      28: istore_2
+      29: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      32: aload_0
+      33: getfield      #305                // Field pos:I
+      36: iload_1
+      37: invokevirtual #450                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.adjacent:(II)Z
+      40: ifeq          61
+      43: aload_0
+      44: aconst_null
+      45: putfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+      48: aload_0
+      49: iload_1
+      50: invokevirtual #496                // Method cellIsPathable:(I)Z
+      53: ifeq          676
+      56: iload_1
+      57: istore_2
+      58: goto          676
+      61: iconst_0
+      62: istore_3
+      63: aload_0
+      64: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      67: aload_0
+      68: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      71: if_acmpne     78
+      74: fconst_2
+      75: goto          81
+      78: ldc_w         #499                // float 1.33f
+      81: fstore        4
+      83: aload_0
+      84: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+      87: ifnull        153
+      90: aload_0
+      91: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+      94: invokevirtual #500                // Method com/watabou/utils/PathFinder$Path.isEmpty:()Z
+      97: ifne          153
+     100: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     103: aload_0
+     104: getfield      #305                // Field pos:I
+     107: aload_0
+     108: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     111: invokevirtual #503                // Method com/watabou/utils/PathFinder$Path.getFirst:()Ljava/lang/Object;
+     114: checkcast     #408                // class java/lang/Integer
+     117: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     120: invokevirtual #450                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.adjacent:(II)Z
+     123: ifeq          153
+     126: aload_0
+     127: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     130: invokevirtual #509                // Method com/watabou/utils/PathFinder$Path.size:()I
+     133: i2f
+     134: fload         4
+     136: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     139: aload_0
+     140: getfield      #305                // Field pos:I
+     143: iload_1
+     144: invokevirtual #510                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.distance:(II)I
+     147: i2f
+     148: fmul
+     149: fcmpl
+     150: ifle          158
+     153: iconst_1
+     154: istore_3
+     155: goto          368
+     158: aload_0
+     159: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     162: invokevirtual #513                // Method com/watabou/utils/PathFinder$Path.getLast:()Ljava/lang/Object;
+     165: checkcast     #408                // class java/lang/Integer
+     168: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     171: iload_1
+     172: if_icmpeq     368
+     175: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     178: iload_1
+     179: aload_0
+     180: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     183: invokevirtual #513                // Method com/watabou/utils/PathFinder$Path.getLast:()Ljava/lang/Object;
+     186: checkcast     #408                // class java/lang/Integer
+     189: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     192: invokevirtual #450                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.adjacent:(II)Z
+     195: ifeq          366
+     198: aload_0
+     199: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     202: invokevirtual #516                // Method com/watabou/utils/PathFinder$Path.removeLast:()Ljava/lang/Object;
+     205: checkcast     #408                // class java/lang/Integer
+     208: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     211: istore        5
+     213: aload_0
+     214: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     217: invokevirtual #500                // Method com/watabou/utils/PathFinder$Path.isEmpty:()Z
+     220: ifeq          280
+     223: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     226: iload_1
+     227: aload_0
+     228: getfield      #305                // Field pos:I
+     231: invokevirtual #450                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.adjacent:(II)Z
+     234: ifeq          252
+     237: aload_0
+     238: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     241: iload_1
+     242: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     245: invokevirtual #523                // Method com/watabou/utils/PathFinder$Path.add:(Ljava/lang/Object;)Z
+     248: pop
+     249: goto          363
+     252: aload_0
+     253: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     256: iload         5
+     258: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     261: invokevirtual #523                // Method com/watabou/utils/PathFinder$Path.add:(Ljava/lang/Object;)Z
+     264: pop
+     265: aload_0
+     266: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     269: iload_1
+     270: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     273: invokevirtual #523                // Method com/watabou/utils/PathFinder$Path.add:(Ljava/lang/Object;)Z
+     276: pop
+     277: goto          363
+     280: aload_0
+     281: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     284: invokevirtual #513                // Method com/watabou/utils/PathFinder$Path.getLast:()Ljava/lang/Object;
+     287: checkcast     #408                // class java/lang/Integer
+     290: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     293: iload_1
+     294: if_icmpne     300
+     297: goto          363
+     300: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     303: iload_1
+     304: aload_0
+     305: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     308: invokevirtual #513                // Method com/watabou/utils/PathFinder$Path.getLast:()Ljava/lang/Object;
+     311: checkcast     #408                // class java/lang/Integer
+     314: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     317: invokevirtual #450                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.adjacent:(II)Z
+     320: ifeq          338
+     323: aload_0
+     324: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     327: iload_1
+     328: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     331: invokevirtual #523                // Method com/watabou/utils/PathFinder$Path.add:(Ljava/lang/Object;)Z
+     334: pop
+     335: goto          363
+     338: aload_0
+     339: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     342: iload         5
+     344: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     347: invokevirtual #523                // Method com/watabou/utils/PathFinder$Path.add:(Ljava/lang/Object;)Z
+     350: pop
+     351: aload_0
+     352: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     355: iload_1
+     356: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     359: invokevirtual #523                // Method com/watabou/utils/PathFinder$Path.add:(Ljava/lang/Object;)Z
+     362: pop
+     363: goto          368
+     366: iconst_1
+     367: istore_3
+     368: iload_3
+     369: ifne          533
+     372: aload_0
+     373: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     376: invokevirtual #524                // Method com/watabou/utils/PathFinder$Path.removeFirst:()Ljava/lang/Object;
+     379: checkcast     #408                // class java/lang/Integer
+     382: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     385: istore        5
+     387: aload_0
+     388: iload         5
+     390: invokevirtual #496                // Method cellIsPathable:(I)Z
+     393: ifne          521
+     396: iconst_1
+     397: istore_3
+     398: aload_0
+     399: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     402: invokevirtual #500                // Method com/watabou/utils/PathFinder$Path.isEmpty:()Z
+     405: ifne          533
+     408: getstatic     #411                // Field com/watabou/utils/PathFinder.NEIGHBOURS8:[I
+     411: astore        6
+     413: aload         6
+     415: arraylength
+     416: istore        7
+     418: iconst_0
+     419: istore        8
+     421: iload         8
+     423: iload         7
+     425: if_icmpge     518
+     428: aload         6
+     430: iload         8
+     432: iaload
+     433: istore        9
+     435: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     438: aload_0
+     439: getfield      #305                // Field pos:I
+     442: iload         5
+     444: iload         9
+     446: iadd
+     447: invokevirtual #450                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.adjacent:(II)Z
+     450: ifeq          512
+     453: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     456: iload         5
+     458: iload         9
+     460: iadd
+     461: aload_0
+     462: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     465: invokevirtual #503                // Method com/watabou/utils/PathFinder$Path.getFirst:()Ljava/lang/Object;
+     468: checkcast     #408                // class java/lang/Integer
+     471: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     474: invokevirtual #450                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.adjacent:(II)Z
+     477: ifeq          512
+     480: aload_0
+     481: iload         5
+     483: iload         9
+     485: iadd
+     486: invokevirtual #496                // Method cellIsPathable:(I)Z
+     489: ifeq          512
+     492: aload_0
+     493: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     496: iload         5
+     498: iload         9
+     500: iadd
+     501: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     504: invokevirtual #527                // Method com/watabou/utils/PathFinder$Path.addFirst:(Ljava/lang/Object;)V
+     507: iconst_0
+     508: istore_3
+     509: goto          518
+     512: iinc          8, 1
+     515: goto          421
+     518: goto          533
+     521: aload_0
+     522: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     525: iload         5
+     527: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+     530: invokevirtual #527                // Method com/watabou/utils/PathFinder$Path.addFirst:(Ljava/lang/Object;)V
+     533: iload_3
+     534: ifeq          650
+     537: aload_0
+     538: iload_1
+     539: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     542: getfield      #395                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.passable:[Z
+     545: aload_0
+     546: getfield      #274                // Field fieldOfView:[Z
+     549: iconst_1
+     550: invokestatic  #531                // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.findPath:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;I[Z[ZZ)Lcom/watabou/utils/PathFinder$Path;
+     553: astore        5
+     555: aload_0
+     556: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     559: aload_0
+     560: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     563: if_acmpeq     575
+     566: aload_0
+     567: aload         5
+     569: putfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     572: goto          650
+     575: aload_0
+     576: iload_1
+     577: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     580: getfield      #395                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.passable:[Z
+     583: aload_0
+     584: getfield      #274                // Field fieldOfView:[Z
+     587: iconst_0
+     588: invokestatic  #531                // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.findPath:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;I[Z[ZZ)Lcom/watabou/utils/PathFinder$Path;
+     591: astore        6
+     593: aload         6
+     595: ifnull        644
+     598: aload         5
+     600: ifnull        618
+     603: aload         5
+     605: invokevirtual #509                // Method com/watabou/utils/PathFinder$Path.size:()I
+     608: iconst_2
+     609: aload         6
+     611: invokevirtual #509                // Method com/watabou/utils/PathFinder$Path.size:()I
+     614: imul
+     615: if_icmple     644
+     618: aload_0
+     619: aload         6
+     621: putfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     624: aload_0
+     625: aload         6
+     627: invokevirtual #503                // Method com/watabou/utils/PathFinder$Path.getFirst:()Ljava/lang/Object;
+     630: checkcast     #408                // class java/lang/Integer
+     633: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     636: invokevirtual #496                // Method cellIsPathable:(I)Z
+     639: ifne          650
+     642: iconst_0
+     643: ireturn
+     644: aload_0
+     645: aload         5
+     647: putfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     650: aload_0
+     651: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     654: ifnull        674
+     657: aload_0
+     658: getfield      #492                // Field path:Lcom/watabou/utils/PathFinder$Path;
+     661: invokevirtual #524                // Method com/watabou/utils/PathFinder$Path.removeFirst:()Ljava/lang/Object;
+     664: checkcast     #408                // class java/lang/Integer
+     667: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     670: istore_2
+     671: goto          676
+     674: iconst_0
+     675: ireturn
+     676: iload_2
+     677: iconst_m1
+     678: if_icmpeq     688
+     681: aload_0
+     682: iload_2
+     683: invokevirtual #535                // Method move:(I)V
+     686: iconst_1
+     687: ireturn
+     688: iconst_0
+     689: ireturn
+
+  protected boolean getFurther(int);
+    Code:
+       0: aload_0
+       1: getfield      #485                // Field rooted:Z
+       4: ifne          15
+       7: iload_1
+       8: aload_0
+       9: getfield      #305                // Field pos:I
+      12: if_icmpne     17
+      15: iconst_0
+      16: ireturn
+      17: aload_0
+      18: iload_1
+      19: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      22: getfield      #395                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.passable:[Z
+      25: aload_0
+      26: getfield      #274                // Field fieldOfView:[Z
+      29: iconst_1
+      30: invokestatic  #539                // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.flee:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;I[Z[ZZ)I
+      33: istore_2
+      34: iload_2
+      35: iconst_m1
+      36: if_icmpeq     46
+      39: aload_0
+      40: iload_2
+      41: invokevirtual #535                // Method move:(I)V
+      44: iconst_1
+      45: ireturn
+      46: iconst_0
+      47: ireturn
+
+  public void updateSpriteState();
+    Code:
+       0: aload_0
+       1: invokespecial #543                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.updateSpriteState:()V
+       4: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+       7: ldc_w         #546                // class com/shatteredpixel/shatteredpixeldungeon/items/artifacts/TimekeepersHourglass$timeFreeze
+      10: invokevirtual #548                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      13: ifnonnull     28
+      16: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      19: ldc_w         #549                // class com/shatteredpixel/shatteredpixeldungeon/plants/Swiftthistle$TimeBubble
+      22: invokevirtual #548                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      25: ifnull        38
+      28: aload_0
+      29: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      32: getstatic     #551                // Field com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite$State.PARALYSED:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite$State;
+      35: invokevirtual #557                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.add:(Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite$State;)V
+      38: return
+
+  public float attackDelay();
+    Code:
+       0: fconst_1
+       1: fstore_1
+       2: aload_0
+       3: ldc_w         #560                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Adrenaline
+       6: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+       9: ifnull        18
+      12: fload_1
+      13: ldc_w         #431                // float 1.5f
+      16: fdiv
+      17: fstore_1
+      18: fload_1
+      19: freturn
+
+  protected boolean doAttack(com.shatteredpixel.shatteredpixeldungeon.actors.Char);
+    Code:
+       0: aload_0
+       1: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+       4: ifnull        40
+       7: aload_0
+       8: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      11: getfield      #562                // Field com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.visible:Z
+      14: ifne          27
+      17: aload_1
+      18: getfield      #565                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      21: getfield      #562                // Field com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.visible:Z
+      24: ifeq          40
+      27: aload_0
+      28: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+      31: aload_1
+      32: getfield      #278                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+      35: invokevirtual #566                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.attack:(I)V
+      38: iconst_0
+      39: ireturn
+      40: aload_0
+      41: aload_1
+      42: invokevirtual #569                // Method attack:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+      45: pop
+      46: aload_0
+      47: invokestatic  #571                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Invisibility.dispel:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)V
+      50: aload_0
+      51: aload_0
+      52: invokevirtual #577                // Method attackDelay:()F
+      55: invokevirtual #1                  // Method spend:(F)V
+      58: iconst_1
+      59: ireturn
+
+  public void onAttackComplete();
+    Code:
+       0: aload_0
+       1: aload_0
+       2: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+       5: invokevirtual #569                // Method attack:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+       8: pop
+       9: aload_0
+      10: invokestatic  #571                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Invisibility.dispel:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)V
+      13: aload_0
+      14: aload_0
+      15: invokevirtual #577                // Method attackDelay:()F
+      18: invokevirtual #1                  // Method spend:(F)V
+      21: aload_0
+      22: invokespecial #580                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.onAttackComplete:()V
+      25: return
+
+  public int defenseSkill(com.shatteredpixel.shatteredpixeldungeon.actors.Char);
+    Code:
+       0: aload_0
+       1: ldc_w         #583                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/spells/GuidingLight$Illuminated
+       4: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+       7: ifnull        74
+      10: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      13: getfield      #585                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.heroClass:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass;
+      16: getstatic     #589                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass.CLERIC:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass;
+      19: if_acmpne     74
+      22: aload_1
+      23: instanceof    #83                 // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero
+      26: ifeq          72
+      29: aload_1
+      30: checkcast     #83                 // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero
+      33: astore_2
+      34: aload_2
+      35: getfield      #594                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.belongings:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings;
+      38: invokevirtual #598                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings.attackingWeapon:()Lcom/shatteredpixel/shatteredpixeldungeon/items/KindOfWeapon;
+      41: instanceof    #604                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/Weapon
+      44: ifeq          67
+      47: aload_2
+      48: getfield      #594                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.belongings:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings;
+      51: invokevirtual #598                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings.attackingWeapon:()Lcom/shatteredpixel/shatteredpixeldungeon/items/KindOfWeapon;
+      54: checkcast     #604                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/Weapon
+      57: invokevirtual #606                // Method com/shatteredpixel/shatteredpixeldungeon/items/weapon/Weapon.STRReq:()I
+      60: aload_2
+      61: invokevirtual #609                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.STR:()I
+      64: if_icmpgt     69
+      67: iconst_0
+      68: ireturn
+      69: goto          74
+      72: iconst_0
+      73: ireturn
+      74: aload_0
+      75: aload_1
+      76: invokevirtual #612                // Method surprisedBy:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+      79: ifne          111
+      82: aload_0
+      83: getfield      #253                // Field paralysed:I
+      86: ifne          111
+      89: aload_0
+      90: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      93: getstatic     #360                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ALLY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      96: if_acmpne     106
+      99: aload_1
+     100: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     103: if_acmpeq     111
+     106: aload_0
+     107: getfield      #77                 // Field defenseSkill:I
+     110: ireturn
+     111: iconst_0
+     112: ireturn
+
+  public int defenseProc(com.shatteredpixel.shatteredpixeldungeon.actors.Char, int);
+    Code:
+       0: aload_1
+       1: instanceof    #83                 // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero
+       4: ifeq          34
+       7: aload_1
+       8: checkcast     #83                 // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero
+      11: getfield      #594                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.belongings:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings;
+      14: invokevirtual #598                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings.attackingWeapon:()Lcom/shatteredpixel/shatteredpixeldungeon/items/KindOfWeapon;
+      17: instanceof    #615                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/missiles/MissileWeapon
+      20: ifeq          34
+      23: getstatic     #617                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.thrownAttacks:I
+      26: iconst_1
+      27: iadd
+      28: putstatic     #617                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.thrownAttacks:I
+      31: invokestatic  #622                // Method com/shatteredpixel/shatteredpixeldungeon/Badges.validateHuntressUnlock:()V
+      34: aload_0
+      35: aload_1
+      36: invokevirtual #612                // Method surprisedBy:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+      39: ifeq          129
+      42: getstatic     #627                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.sneakAttacks:I
+      45: iconst_1
+      46: iadd
+      47: putstatic     #627                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.sneakAttacks:I
+      50: invokestatic  #630                // Method com/shatteredpixel/shatteredpixeldungeon/Badges.validateRogueUnlock:()V
+      53: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      56: getfield      #594                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.belongings:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings;
+      59: invokevirtual #598                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings.attackingWeapon:()Lcom/shatteredpixel/shatteredpixeldungeon/items/KindOfWeapon;
+      62: instanceof    #633                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/SpiritBow$SpiritArrow
+      65: ifne          83
+      68: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      71: getfield      #594                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.belongings:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings;
+      74: invokevirtual #598                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings.attackingWeapon:()Lcom/shatteredpixel/shatteredpixeldungeon/items/KindOfWeapon;
+      77: instanceof    #635                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/missiles/darts/Dart
+      80: ifeq          98
+      83: getstatic     #637                // Field com/watabou/noosa/audio/Sample.INSTANCE:Lcom/watabou/noosa/audio/Sample;
+      86: ldc_w         #645                // String sounds/hit_strong.mp3
+      89: ldc_w         #647                // float 0.125f
+      92: invokevirtual #648                // Method com/watabou/noosa/audio/Sample.playDelayed:(Ljava/lang/Object;F)V
+      95: goto          108
+      98: getstatic     #637                // Field com/watabou/noosa/audio/Sample.INSTANCE:Lcom/watabou/noosa/audio/Sample;
+     101: ldc_w         #645                // String sounds/hit_strong.mp3
+     104: invokevirtual #652                // Method com/watabou/noosa/audio/Sample.play:(Ljava/lang/Object;)J
+     107: pop2
+     108: aload_1
+     109: ldc_w         #656                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Preparation
+     112: invokevirtual #331                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     115: ifnull        125
+     118: aload_0
+     119: invokestatic  #658                // Method com/shatteredpixel/shatteredpixeldungeon/effects/Wound.hit:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)V
+     122: goto          129
+     125: aload_0
+     126: invokestatic  #663                // Method com/shatteredpixel/shatteredpixeldungeon/effects/Surprise.hit:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)V
+     129: aload_0
+     130: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     133: aload_0
+     134: getfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     137: if_acmpeq     176
+     140: aload_0
+     141: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     144: aload_0
+     145: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     148: if_acmpeq     167
+     151: aload_0
+     152: aload_1
+     153: invokevirtual #666                // Method aggro:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)V
+     156: aload_0
+     157: aload_1
+     158: getfield      #278                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+     161: putfield      #74                 // Field target:I
+     164: goto          176
+     167: aload_0
+     168: getfield      #121                // Field recentlyAttackedBy:Ljava/util/ArrayList;
+     171: aload_1
+     172: invokevirtual #669                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     175: pop
+     176: aload_0
+     177: ldc_w         #670                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/SoulMark
+     180: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     183: ifnull        343
+     186: iload_2
+     187: aload_0
+     188: getfield      #125                // Field HP:I
+     191: aload_0
+     192: invokevirtual #672                // Method shielding:()I
+     195: iadd
+     196: invokestatic  #675                // Method java/lang/Math.min:(II)I
+     199: istore_3
+     200: aload_1
+     201: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     204: if_acmpeq     232
+     207: iload_3
+     208: i2f
+     209: ldc_w         #678                // float 0.4f
+     212: fmul
+     213: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     216: getstatic     #679                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.SOUL_SIPHON:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+     219: invokevirtual #685                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pointsInTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)I
+     222: i2f
+     223: fmul
+     224: ldc_w         #689                // float 3.0f
+     227: fdiv
+     228: invokestatic  #137                // Method java/lang/Math.round:(F)I
+     231: istore_3
+     232: iload_3
+     233: ifle          343
+     236: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     239: ldc_w         #690                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Hunger
+     242: invokestatic  #692                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.affect:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     245: checkcast     #690                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Hunger
+     248: iload_3
+     249: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     252: getstatic     #698                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.SOUL_EATER:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+     255: invokevirtual #685                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pointsInTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)I
+     258: imul
+     259: i2f
+     260: ldc_w         #689                // float 3.0f
+     263: fdiv
+     264: invokevirtual #701                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Hunger.affectHunger:(F)V
+     267: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     270: getfield      #704                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.HP:I
+     273: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     276: getfield      #705                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.HT:I
+     279: if_icmpge     343
+     282: iload_3
+     283: i2f
+     284: ldc_w         #678                // float 0.4f
+     287: fmul
+     288: f2d
+     289: invokestatic  #313                // Method java/lang/Math.ceil:(D)D
+     292: d2i
+     293: istore        4
+     295: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     298: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     301: getfield      #705                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.HT:I
+     304: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     307: getfield      #704                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.HP:I
+     310: iload         4
+     312: iadd
+     313: invokestatic  #675                // Method java/lang/Math.min:(II)I
+     316: putfield      #704                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.HP:I
+     319: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     322: getfield      #706                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+     325: ldc_w         #707                // int 65280
+     328: iload         4
+     330: invokestatic  #708                // Method java/lang/Integer.toString:(I)Ljava/lang/String;
+     333: getstatic     #712                // Field com/shatteredpixel/shatteredpixeldungeon/effects/FloatingText.HEALING:I
+     336: iconst_0
+     337: anewarray     #365                // class java/lang/Object
+     340: invokevirtual #717                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.showStatusWithIcon:(ILjava/lang/String;I[Ljava/lang/Object;)V
+     343: aload_0
+     344: aload_1
+     345: iload_2
+     346: invokespecial #721                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.defenseProc:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;I)I
+     349: ireturn
+
+  public float speedRaw();
+    Code:
+       0: aload_0
+       1: invokespecial #725                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.speedRaw:()F
+       4: aload_0
+       5: invokestatic  #728                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/AscensionChallenge.enemySpeedModifier:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)F
+       8: fmul
+       9: freturn
+
+  public final boolean surprisedBy(com.shatteredpixel.shatteredpixeldungeon.actors.Char);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iconst_1
+       3: invokevirtual #732                // Method surprisedBy:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Z)Z
+       6: ireturn
+
+  public boolean surprisedBy(com.shatteredpixel.shatteredpixeldungeon.actors.Char, boolean);
+    Code:
+       0: aload_1
+       1: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+       4: if_acmpne     89
+       7: aload_1
+       8: getfield      #281                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.invisible:I
+      11: ifgt          74
+      14: aload_0
+      15: getfield      #171                // Field enemySeen:Z
+      18: ifeq          74
+      21: aload_0
+      22: getfield      #274                // Field fieldOfView:[Z
+      25: ifnull        54
+      28: aload_0
+      29: getfield      #274                // Field fieldOfView:[Z
+      32: arraylength
+      33: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      36: invokevirtual #735                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.length:()I
+      39: if_icmpne     54
+      42: aload_0
+      43: getfield      #274                // Field fieldOfView:[Z
+      46: aload_1
+      47: getfield      #278                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+      50: baload
+      51: ifeq          74
+      54: iload_2
+      55: ifeq          89
+      58: aload_1
+      59: checkcast     #83                 // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero
+      62: getfield      #594                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.belongings:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings;
+      65: invokevirtual #598                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Belongings.attackingWeapon:()Lcom/shatteredpixel/shatteredpixeldungeon/items/KindOfWeapon;
+      68: instanceof    #738                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/melee/VoidDiffraction
+      71: ifeq          89
+      74: iload_2
+      75: ifeq          85
+      78: aload_1
+      79: invokevirtual #740                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.canSurpriseAttack:()Z
+      82: ifeq          89
+      85: iconst_1
+      86: goto          90
+      89: iconst_0
+      90: ireturn
+
+  public boolean heroShouldInteract();
+    Code:
+       0: aload_0
+       1: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+       4: getstatic     #23                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+       7: if_acmpeq     24
+      10: aload_0
+      11: ldc_w         #327                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Amok
+      14: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      17: ifnonnull     24
+      20: iconst_1
+      21: goto          25
+      24: iconst_0
+      25: ireturn
+
+  public void aggro(com.shatteredpixel.shatteredpixeldungeon.actors.Char);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+       5: aload_0
+       6: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+       9: aload_0
+      10: getfield      #68                 // Field PASSIVE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      13: if_acmpeq     24
+      16: aload_0
+      17: aload_0
+      18: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      21: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      24: return
+
+  public void clearEnemy();
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: putfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+       5: aload_0
+       6: iconst_0
+       7: putfield      #171                // Field enemySeen:Z
+      10: aload_0
+      11: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      14: aload_0
+      15: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      18: if_acmpne     29
+      21: aload_0
+      22: aload_0
+      23: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      26: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      29: return
+
+  public boolean isTargeting(com.shatteredpixel.shatteredpixeldungeon.actors.Char);
+    Code:
+       0: aload_0
+       1: getfield      #183                // Field enemy:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+       4: aload_1
+       5: if_acmpne     12
+       8: iconst_1
+       9: goto          13
+      12: iconst_0
+      13: ireturn
+
+  public void damage(int, java.lang.Object);
+    Code:
+       0: aload_0
+       1: aload_2
+       2: invokevirtual #364                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+       5: invokevirtual #388                // Method isInvulnerable:(Ljava/lang/Class;)Z
+       8: ifne          137
+      11: aload_0
+      12: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      15: aload_0
+      16: getfield      #37                 // Field SLEEPING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      19: if_acmpne     30
+      22: aload_0
+      23: aload_0
+      24: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      27: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      30: aload_2
+      31: instanceof    #743                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Corruption
+      34: ifne          137
+      37: aload_0
+      38: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      41: aload_0
+      42: getfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      45: if_acmpeq     137
+      48: aload_0
+      49: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      52: aload_0
+      53: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      56: if_acmpeq     105
+      59: aload_0
+      60: iconst_1
+      61: putfield      #91                 // Field alerted:Z
+      64: aload_2
+      65: instanceof    #745                // class com/shatteredpixel/shatteredpixeldungeon/items/wands/Wand
+      68: ifne          85
+      71: aload_2
+      72: instanceof    #747                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/spells/ClericSpell
+      75: ifne          85
+      78: aload_2
+      79: instanceof    #749                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/ArmorAbility
+      82: ifeq          137
+      85: aload_0
+      86: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      89: invokevirtual #666                // Method aggro:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)V
+      92: aload_0
+      93: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      96: getfield      #386                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pos:I
+      99: putfield      #74                 // Field target:I
+     102: goto          137
+     105: aload_2
+     106: instanceof    #745                // class com/shatteredpixel/shatteredpixeldungeon/items/wands/Wand
+     109: ifne          126
+     112: aload_2
+     113: instanceof    #747                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/spells/ClericSpell
+     116: ifne          126
+     119: aload_2
+     120: instanceof    #749                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/ArmorAbility
+     123: ifeq          137
+     126: aload_0
+     127: getfield      #121                // Field recentlyAttackedBy:Ljava/util/ArrayList;
+     130: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     133: invokevirtual #669                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     136: pop
+     137: aload_0
+     138: iload_1
+     139: aload_2
+     140: invokespecial #751                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.damage:(ILjava/lang/Object;)V
+     143: return
+
+  public void destroy();
+    Code:
+       0: aload_0
+       1: invokespecial #755                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.destroy:()V
+       4: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+       7: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+      10: aload_0
+      11: invokevirtual #392                // Method java/util/HashSet.remove:(Ljava/lang/Object;)Z
+      14: pop
+      15: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      18: ldc_w         #758                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/MindVision
+      21: invokevirtual #548                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      24: ifnull        38
+      27: invokestatic  #760                // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.observe:()V
+      30: aload_0
+      31: getfield      #305                // Field pos:I
+      34: iconst_2
+      35: invokestatic  #317                // Method com/shatteredpixel/shatteredpixeldungeon/scenes/GameScene.updateFog:(II)V
+      38: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      41: invokevirtual #763                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.isAlive:()Z
+      44: ifeq          239
+      47: aload_0
+      48: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      51: getstatic     #23                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      54: if_acmpne     239
+      57: getstatic     #764                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.enemiesSlain:I
+      60: iconst_1
+      61: iadd
+      62: putstatic     #764                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.enemiesSlain:I
+      65: invokestatic  #767                // Method com/shatteredpixel/shatteredpixeldungeon/Badges.validateMonstersSlain:()V
+      68: iconst_0
+      69: putstatic     #770                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.qualifiedForNoKilling:Z
+      72: aload_0
+      73: invokevirtual #364                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+      76: invokestatic  #773                // Method com/shatteredpixel/shatteredpixeldungeon/journal/Bestiary.setSeen:(Ljava/lang/Class;)V
+      79: aload_0
+      80: invokevirtual #364                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+      83: invokestatic  #779                // Method com/shatteredpixel/shatteredpixeldungeon/journal/Bestiary.countEncounter:(Ljava/lang/Class;)V
+      86: aload_0
+      87: invokestatic  #782                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/AscensionChallenge.processEnemyKill:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)V
+      90: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      93: getfield      #785                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.lvl:I
+      96: aload_0
+      97: getfield      #85                 // Field maxLvl:I
+     100: if_icmpgt     110
+     103: aload_0
+     104: getfield      #80                 // Field EXP:I
+     107: goto          111
+     110: iconst_0
+     111: istore_1
+     112: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     115: ldc           #132                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/AscensionChallenge
+     117: invokevirtual #548                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     120: ifnull        164
+     123: iload_1
+     124: ifne          164
+     127: aload_0
+     128: getfield      #85                 // Field maxLvl:I
+     131: ifle          164
+     134: aload_0
+     135: getfield      #80                 // Field EXP:I
+     138: ifle          164
+     141: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     144: getfield      #785                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.lvl:I
+     147: bipush        30
+     149: if_icmpge     164
+     152: ldc_w         #788                // float 10.0f
+     155: aload_0
+     156: invokevirtual #789                // Method spawningWeight:()F
+     159: fmul
+     160: invokestatic  #137                // Method java/lang/Math.round:(F)I
+     163: istore_1
+     164: iload_1
+     165: ifle          200
+     168: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     171: invokestatic  #792                // Method com/shatteredpixel/shatteredpixeldungeon/items/weapon/melee/NarcissusCrossSwordBase.blocksExpNow:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;)Z
+     174: ifne          200
+     177: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     180: getfield      #706                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+     183: ldc_w         #707                // int 65280
+     186: iload_1
+     187: invokestatic  #708                // Method java/lang/Integer.toString:(I)Ljava/lang/String;
+     190: getstatic     #798                // Field com/shatteredpixel/shatteredpixeldungeon/effects/FloatingText.EXPERIENCE:I
+     193: iconst_0
+     194: anewarray     #365                // class java/lang/Object
+     197: invokevirtual #717                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.showStatusWithIcon:(ILjava/lang/String;I[Ljava/lang/Object;)V
+     200: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     203: iload_1
+     204: aload_0
+     205: invokevirtual #364                // Method java/lang/Object.getClass:()Ljava/lang/Class;
+     208: invokevirtual #801                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.earnExp:(ILjava/lang/Class;)V
+     211: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     214: getfield      #805                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.subClass:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroSubClass;
+     217: getstatic     #809                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroSubClass.MONK:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroSubClass;
+     220: if_acmpne     239
+     223: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     226: ldc_w         #814                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/MonkEnergy
+     229: invokestatic  #692                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.affect:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     232: checkcast     #814                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/MonkEnergy
+     235: aload_0
+     236: invokevirtual #816                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/MonkEnergy.gainEnergy:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+     239: return
+
+  public boolean isAlive();
+    Code:
+       0: aload_0
+       1: invokespecial #271                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.isAlive:()Z
+       4: ifne          14
+       7: aload_0
+       8: getfield      #98                 // Field geburaGrace:Z
+      11: ifeq          18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: ireturn
+
+  public boolean isInvulnerable(java.lang.Class);
+    Code:
+       0: aload_0
+       1: getfield      #98                 // Field geburaGrace:Z
+       4: ifne          15
+       7: aload_0
+       8: aload_1
+       9: invokespecial #370                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.isInvulnerable:(Ljava/lang/Class;)Z
+      12: ifeq          19
+      15: iconst_1
+      16: goto          20
+      19: iconst_0
+      20: ireturn
+
+  public boolean consumeGeburaStagger();
+    Code:
+       0: aload_0
+       1: getfield      #104                // Field geburaStagger:Z
+       4: ifne          9
+       7: iconst_0
+       8: ireturn
+       9: aload_0
+      10: iconst_0
+      11: putfield      #104                // Field geburaStagger:Z
+      14: iconst_1
+      15: ireturn
+
+  public boolean deathIsDeferred(java.lang.Object);
+    Code:
+       0: iconst_0
+       1: ireturn
+
+  public void die(java.lang.Object);
+    Code:
+       0: aload_1
+       1: ldc_w         #819                // class com/shatteredpixel/shatteredpixeldungeon/levels/features/Chasm
+       4: if_acmpne     40
+       7: aload_0
+       8: getfield      #80                 // Field EXP:I
+      11: iconst_2
+      12: irem
+      13: iconst_1
+      14: if_icmpne     30
+      17: aload_0
+      18: dup
+      19: getfield      #80                 // Field EXP:I
+      22: iconst_2
+      23: invokestatic  #821                // Method com/watabou/utils/Random.Int:(I)I
+      26: iadd
+      27: putfield      #80                 // Field EXP:I
+      30: aload_0
+      31: dup
+      32: getfield      #80                 // Field EXP:I
+      35: iconst_2
+      36: idiv
+      37: putfield      #80                 // Field EXP:I
+      40: aload_0
+      41: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      44: getstatic     #23                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      47: if_acmpne     394
+      50: aload_0
+      51: ldc_w         #827                // class com/shatteredpixel/shatteredpixeldungeon/levels/traps/Trap$HazardAssistTracker
+      54: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      57: ifnull        71
+      60: getstatic     #829                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.hazardAssistedKills:I
+      63: iconst_1
+      64: iadd
+      65: putstatic     #829                // Field com/shatteredpixel/shatteredpixeldungeon/Statistics.hazardAssistedKills:I
+      68: invokestatic  #832                // Method com/shatteredpixel/shatteredpixeldungeon/Badges.validateHazardAssists:()V
+      71: aload_0
+      72: ldc_w         #835                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/enchantments/Lucky$LuckProc
+      75: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      78: ifnull        85
+      81: iconst_1
+      82: goto          86
+      85: iconst_0
+      86: istore_2
+      87: aload_0
+      88: invokevirtual #837                // Method rollToDropLoot:()V
+      91: aload_1
+      92: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      95: if_acmpeq     147
+      98: aload_1
+      99: instanceof    #604                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/Weapon
+     102: ifne          147
+     105: aload_1
+     106: instanceof    #840                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/Weapon$Enchantment
+     109: ifne          147
+     112: aload_1
+     113: instanceof    #842                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/melee/DimDusk$MagicStrike
+     116: ifne          147
+     119: aload_1
+     120: instanceof    #844                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/melee/DimDusk$FlameStrike
+     123: ifne          147
+     126: aload_1
+     127: instanceof    #846                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/TearSword$MagicStrike
+     130: ifne          147
+     133: aload_1
+     134: instanceof    #848                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/ResinCoatingBuff
+     137: ifne          147
+     140: aload_1
+     141: instanceof    #850                // class com/shatteredpixel/shatteredpixeldungeon/actors/blobs/Electricity
+     144: ifeq          361
+     147: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     150: invokestatic  #852                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Instruction.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;)V
+     153: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     156: aload_0
+     157: invokestatic  #858                // Method com/shatteredpixel/shatteredpixeldungeon/items/weapon/melee/TinyGalaxy.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+     160: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     163: aload_0
+     164: invokestatic  #863                // Method com/shatteredpixel/shatteredpixeldungeon/items/weapon/melee/SmilingBlade.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+     167: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     170: aload_0
+     171: iload_2
+     172: invokestatic  #866                // Method com/shatteredpixel/shatteredpixeldungeon/items/RingMasterLoot.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;Z)V
+     175: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     178: invokestatic  #871                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/ringmaster/RingMasterVoice.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;)V
+     181: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     184: aload_0
+     185: invokestatic  #874                // Method com/shatteredpixel/shatteredpixeldungeon/items/artifacts/RevengeLedger.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+     188: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     191: aload_0
+     192: invokestatic  #877                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/VengeanceArts.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)V
+     195: aload_0
+     196: invokevirtual #880                // Method properties:()Ljava/util/HashSet;
+     199: getstatic     #883                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Property.BOSS:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Property;
+     202: invokevirtual #351                // Method java/util/HashSet.contains:(Ljava/lang/Object;)Z
+     205: ifeq          214
+     208: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     211: invokestatic  #886                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Instruction.onBossKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;)V
+     214: aload_0
+     215: ldc_w         #889                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/InstructionTarget
+     218: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     221: ifnull        236
+     224: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     227: invokestatic  #891                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.onOracleBlessing:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;)V
+     230: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     233: invokestatic  #894                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Instruction.onTargetKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;)V
+     236: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     239: getstatic     #897                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.LETHAL_MOMENTUM:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+     242: invokevirtual #900                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.hasTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)Z
+     245: ifeq          284
+     248: invokestatic  #904                // Method com/watabou/utils/Random.Float:()F
+     251: ldc_w         #907                // float 0.34f
+     254: ldc_w         #908                // float 0.33f
+     257: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     260: getstatic     #897                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.LETHAL_MOMENTUM:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+     263: invokevirtual #685                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pointsInTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)I
+     266: i2f
+     267: fmul
+     268: fadd
+     269: fcmpg
+     270: ifge          284
+     273: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     276: ldc_w         #909                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent$LethalMomentumTracker
+     279: fconst_0
+     280: invokestatic  #911                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.affect:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;F)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/FlavourBuff;
+     283: pop
+     284: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     287: getfield      #585                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.heroClass:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass;
+     290: getstatic     #914                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass.DUELIST:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass;
+     293: if_acmpeq     361
+     296: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     299: getstatic     #917                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.LETHAL_HASTE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+     302: invokevirtual #900                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.hasTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)Z
+     305: ifeq          361
+     308: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     311: ldc_w         #920                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent$LethalHasteCooldown
+     314: invokevirtual #548                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     317: ifnonnull     361
+     320: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     323: ldc_w         #920                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent$LethalHasteCooldown
+     326: ldc_w         #922                // float 100.0f
+     329: invokestatic  #911                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.affect:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;F)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/FlavourBuff;
+     332: pop
+     333: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     336: ldc_w         #923                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/GreaterHaste
+     339: invokestatic  #692                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.affect:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     342: checkcast     #923                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/GreaterHaste
+     345: iconst_2
+     346: iconst_2
+     347: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     350: getstatic     #917                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.LETHAL_HASTE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+     353: invokevirtual #685                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pointsInTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)I
+     356: imul
+     357: iadd
+     358: invokevirtual #925                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/GreaterHaste.set:(I)V
+     361: aload_1
+     362: instanceof    #928                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Bleeding
+     365: ifeq          394
+     368: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     371: getfield      #585                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.heroClass:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass;
+     374: getstatic     #930                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass.RING_MASTER:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/HeroClass;
+     377: if_acmpne     394
+     380: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     383: aload_0
+     384: iload_2
+     385: invokestatic  #866                // Method com/shatteredpixel/shatteredpixeldungeon/items/RingMasterLoot.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;Z)V
+     388: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     391: invokestatic  #871                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/ringmaster/RingMasterVoice.onEnemyKilled:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;)V
+     394: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     397: invokevirtual #763                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.isAlive:()Z
+     400: ifeq          435
+     403: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     406: getfield      #933                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.heroFOV:[Z
+     409: aload_0
+     410: getfield      #305                // Field pos:I
+     413: baload
+     414: ifne          435
+     417: aload_0
+     418: ldc_w         #936                // String died
+     421: iconst_0
+     422: anewarray     #365                // class java/lang/Object
+     425: invokestatic  #440                // Method com/shatteredpixel/shatteredpixeldungeon/messages/Messages.get:(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     428: iconst_0
+     429: anewarray     #365                // class java/lang/Object
+     432: invokestatic  #938                // Method com/shatteredpixel/shatteredpixeldungeon/utils/GLog.i:(Ljava/lang/String;[Ljava/lang/Object;)V
+     435: aload_0
+     436: ldc_w         #670                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/SoulMark
+     439: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     442: ifnull        449
+     445: iconst_1
+     446: goto          450
+     449: iconst_0
+     450: istore_2
+     451: aload_0
+     452: aload_1
+     453: invokespecial #944                // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.die:(Ljava/lang/Object;)V
+     456: aload_1
+     457: instanceof    #947                // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/MeltingLove
+     460: ifeq          474
+     463: aload_1
+     464: checkcast     #947                // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/MeltingLove
+     467: aload_0
+     468: getfield      #305                // Field pos:I
+     471: invokevirtual #949                // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/MeltingLove.onKill:(I)V
+     474: aload_0
+     475: instanceof    #952                // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Wraith
+     478: ifne          572
+     481: iload_2
+     482: ifeq          572
+     485: invokestatic  #904                // Method com/watabou/utils/Random.Float:()F
+     488: ldc_w         #678                // float 0.4f
+     491: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     494: getstatic     #954                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.NECROMANCERS_MINIONS:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+     497: invokevirtual #685                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pointsInTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)I
+     500: i2f
+     501: fmul
+     502: ldc_w         #689                // float 3.0f
+     505: fdiv
+     506: fcmpg
+     507: ifge          572
+     510: aload_0
+     511: getfield      #305                // Field pos:I
+     514: ldc_w         #952                // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Wraith
+     517: invokestatic  #957                // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Wraith.spawnAt:(ILjava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Wraith;
+     520: astore_3
+     521: aload_3
+     522: ifnull        572
+     525: aload_3
+     526: ldc_w         #743                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Corruption
+     529: invokestatic  #692                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.affect:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     532: pop
+     533: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     536: getfield      #933                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.heroFOV:[Z
+     539: aload_0
+     540: getfield      #305                // Field pos:I
+     543: baload
+     544: ifeq          572
+     547: aload_0
+     548: getfield      #305                // Field pos:I
+     551: invokestatic  #961                // Method com/shatteredpixel/shatteredpixeldungeon/effects/CellEmitter.get:(I)Lcom/watabou/noosa/particles/Emitter;
+     554: getstatic     #966                // Field com/shatteredpixel/shatteredpixeldungeon/effects/particles/ShadowParticle.CURSE:Lcom/watabou/noosa/particles/Emitter$Factory;
+     557: bipush        6
+     559: invokevirtual #972                // Method com/watabou/noosa/particles/Emitter.burst:(Lcom/watabou/noosa/particles/Emitter$Factory;I)V
+     562: getstatic     #637                // Field com/watabou/noosa/audio/Sample.INSTANCE:Lcom/watabou/noosa/audio/Sample;
+     565: ldc_w         #978                // String sounds/cursed.mp3
+     568: invokevirtual #652                // Method com/watabou/noosa/audio/Sample.play:(Ljava/lang/Object;)J
+     571: pop2
+     572: return
+
+  public float lootChance();
+    Code:
+       0: aload_0
+       1: getfield      #114                // Field lootChance:F
+       4: fstore_1
+       5: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+       8: invokestatic  #980                // Method com/shatteredpixel/shatteredpixeldungeon/items/rings/RingOfWealth.dropChanceMultiplier:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)F
+      11: fstore_2
+      12: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      15: ldc_w         #985                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent$BountyHunterTracker
+      18: invokevirtual #548                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      21: checkcast     #985                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent$BountyHunterTracker
+      24: astore_3
+      25: aload_3
+      26: ifnull        89
+      29: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      32: ldc_w         #656                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Preparation
+      35: invokevirtual #548                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      38: checkcast     #656                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Preparation
+      41: astore        4
+      43: aload         4
+      45: ifnull        89
+      48: ldc_w         #987                // float 0.02f
+      51: ldc2_w        #988                // double 2.0d
+      54: aload         4
+      56: invokevirtual #990                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Preparation.attackLevel:()I
+      59: iconst_1
+      60: isub
+      61: i2d
+      62: invokestatic  #993                // Method java/lang/Math.pow:(DD)D
+      65: d2f
+      66: fmul
+      67: fstore        5
+      69: fload         5
+      71: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      74: getstatic     #997                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.BOUNTY_HUNTER:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+      77: invokevirtual #685                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pointsInTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)I
+      80: i2f
+      81: fmul
+      82: fstore        5
+      84: fload_2
+      85: fload         5
+      87: fadd
+      88: fstore_2
+      89: fload_2
+      90: invokestatic  #1000               // Method com/shatteredpixel/shatteredpixeldungeon/items/trinkets/ShardOfOblivion.lootChanceMultiplier:()F
+      93: fconst_1
+      94: fsub
+      95: fadd
+      96: fstore_2
+      97: fload_1
+      98: fload_2
+      99: fmul
+     100: freturn
+
+  public void rollToDropLoot();
+    Code:
+       0: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+       3: getfield      #785                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.lvl:I
+       6: aload_0
+       7: getfield      #85                 // Field maxLvl:I
+      10: iconst_2
+      11: iadd
+      12: if_icmple     16
+      15: return
+      16: aload_0
+      17: ldc_w         #1005               // class com/shatteredpixel/shatteredpixeldungeon/items/artifacts/MasterThievesArmband$StolenTracker
+      20: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      23: checkcast     #1005               // class com/shatteredpixel/shatteredpixeldungeon/items/artifacts/MasterThievesArmband$StolenTracker
+      26: astore_1
+      27: aload_1
+      28: ifnull        38
+      31: aload_1
+      32: invokevirtual #1007               // Method com/shatteredpixel/shatteredpixeldungeon/items/artifacts/MasterThievesArmband$StolenTracker.itemWasStolen:()Z
+      35: ifne          75
+      38: invokestatic  #904                // Method com/watabou/utils/Random.Float:()F
+      41: aload_0
+      42: invokevirtual #1010               // Method lootChance:()F
+      45: fcmpg
+      46: ifge          75
+      49: aload_0
+      50: invokevirtual #1012               // Method createLoot:()Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;
+      53: astore_2
+      54: aload_2
+      55: ifnull        75
+      58: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      61: aload_2
+      62: aload_0
+      63: getfield      #305                // Field pos:I
+      66: invokevirtual #1016               // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.drop:(Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;I)Lcom/shatteredpixel/shatteredpixeldungeon/items/Heap;
+      69: getfield      #1020               // Field com/shatteredpixel/shatteredpixeldungeon/items/Heap.sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/ItemSprite;
+      72: invokevirtual #1025               // Method com/shatteredpixel/shatteredpixeldungeon/sprites/ItemSprite.drop:()V
+      75: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      78: ldc_w         #1029               // class com/shatteredpixel/shatteredpixeldungeon/items/rings/RingOfWealth$Wealth
+      81: invokestatic  #1031               // Method com/shatteredpixel/shatteredpixeldungeon/items/rings/Ring.getBuffedBonus:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;)I
+      84: ifle          198
+      87: iconst_1
+      88: istore_2
+      89: aload_0
+      90: getfield      #1037               // Field properties:Ljava/util/HashSet;
+      93: getstatic     #883                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Property.BOSS:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Property;
+      96: invokevirtual #351                // Method java/util/HashSet.contains:(Ljava/lang/Object;)Z
+      99: ifeq          108
+     102: bipush        15
+     104: istore_2
+     105: goto          123
+     108: aload_0
+     109: getfield      #1037               // Field properties:Ljava/util/HashSet;
+     112: getstatic     #1039               // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Property.MINIBOSS:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Property;
+     115: invokevirtual #351                // Method java/util/HashSet.contains:(Ljava/lang/Object;)Z
+     118: ifeq          123
+     121: iconst_5
+     122: istore_2
+     123: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     126: iload_2
+     127: invokestatic  #1042               // Method com/shatteredpixel/shatteredpixeldungeon/items/rings/RingOfWealth.tryForBonusDrop:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;I)Ljava/util/ArrayList;
+     130: astore_3
+     131: aload_3
+     132: ifnull        198
+     135: aload_3
+     136: invokevirtual #1046               // Method java/util/ArrayList.isEmpty:()Z
+     139: ifne          198
+     142: aload_3
+     143: invokevirtual #1047               // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     146: astore        4
+     148: aload         4
+     150: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     155: ifeq          191
+     158: aload         4
+     160: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     165: checkcast     #1048               // class com/shatteredpixel/shatteredpixeldungeon/items/Item
+     168: astore        5
+     170: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     173: aload         5
+     175: aload_0
+     176: getfield      #305                // Field pos:I
+     179: invokevirtual #1016               // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.drop:(Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;I)Lcom/shatteredpixel/shatteredpixeldungeon/items/Heap;
+     182: getfield      #1020               // Field com/shatteredpixel/shatteredpixeldungeon/items/Heap.sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/ItemSprite;
+     185: invokevirtual #1025               // Method com/shatteredpixel/shatteredpixeldungeon/sprites/ItemSprite.drop:()V
+     188: goto          148
+     191: aload_0
+     192: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+     195: invokestatic  #1050               // Method com/shatteredpixel/shatteredpixeldungeon/items/rings/RingOfWealth.showFlareForBonusDrop:(Lcom/watabou/noosa/Visual;)V
+     198: aload_0
+     199: ldc_w         #835                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/enchantments/Lucky$LuckProc
+     202: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     205: ifnull        244
+     208: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     211: aload_0
+     212: ldc_w         #835                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/enchantments/Lucky$LuckProc
+     215: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     218: checkcast     #835                // class com/shatteredpixel/shatteredpixeldungeon/items/weapon/enchantments/Lucky$LuckProc
+     221: invokevirtual #1054               // Method com/shatteredpixel/shatteredpixeldungeon/items/weapon/enchantments/Lucky$LuckProc.genLoot:()Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;
+     224: aload_0
+     225: getfield      #305                // Field pos:I
+     228: invokevirtual #1016               // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.drop:(Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;I)Lcom/shatteredpixel/shatteredpixeldungeon/items/Heap;
+     231: getfield      #1020               // Field com/shatteredpixel/shatteredpixeldungeon/items/Heap.sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/ItemSprite;
+     234: invokevirtual #1025               // Method com/shatteredpixel/shatteredpixeldungeon/sprites/ItemSprite.drop:()V
+     237: aload_0
+     238: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+     241: invokestatic  #1057               // Method com/shatteredpixel/shatteredpixeldungeon/items/weapon/enchantments/Lucky.showFlare:(Lcom/watabou/noosa/Visual;)V
+     244: aload_0
+     245: ldc_w         #670                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/SoulMark
+     248: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     251: ifnull        279
+     254: bipush        10
+     256: invokestatic  #821                // Method com/watabou/utils/Random.Int:(I)I
+     259: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     262: getstatic     #698                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.SOUL_EATER:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;
+     265: invokevirtual #685                // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pointsInTalent:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent;)I
+     268: if_icmpge     279
+     271: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+     274: fconst_0
+     275: aconst_null
+     276: invokestatic  #1062               // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/Talent.onFoodEaten:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;FLcom/shatteredpixel/shatteredpixeldungeon/items/Item;)V
+     279: return
+
+  public com.shatteredpixel.shatteredpixeldungeon.items.Item createLoot();
+    Code:
+       0: aload_0
+       1: getfield      #110                // Field loot:Ljava/lang/Object;
+       4: instanceof    #1066               // class com/shatteredpixel/shatteredpixeldungeon/items/Generator$Category
+       7: ifeq          24
+      10: aload_0
+      11: getfield      #110                // Field loot:Ljava/lang/Object;
+      14: checkcast     #1066               // class com/shatteredpixel/shatteredpixeldungeon/items/Generator$Category
+      17: invokestatic  #1068               // Method com/shatteredpixel/shatteredpixeldungeon/items/Generator.randomUsingDefaults:(Lcom/shatteredpixel/shatteredpixeldungeon/items/Generator$Category;)Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;
+      20: astore_1
+      21: goto          136
+      24: aload_0
+      25: getfield      #110                // Field loot:Ljava/lang/Object;
+      28: instanceof    #1074               // class java/lang/Class
+      31: ifeq          128
+      34: getstatic     #1076               // Field com/shatteredpixel/shatteredpixeldungeon/items/potions/exotic/ExoticPotion.regToExo:Ljava/util/LinkedHashMap;
+      37: aload_0
+      38: getfield      #110                // Field loot:Ljava/lang/Object;
+      41: invokevirtual #1082               // Method java/util/LinkedHashMap.containsKey:(Ljava/lang/Object;)Z
+      44: ifeq          74
+      47: invokestatic  #904                // Method com/watabou/utils/Random.Float:()F
+      50: invokestatic  #1087               // Method com/shatteredpixel/shatteredpixeldungeon/items/trinkets/ExoticCrystals.consumableExoticChance:()F
+      53: fcmpg
+      54: ifge          114
+      57: getstatic     #1076               // Field com/shatteredpixel/shatteredpixeldungeon/items/potions/exotic/ExoticPotion.regToExo:Ljava/util/LinkedHashMap;
+      60: aload_0
+      61: getfield      #110                // Field loot:Ljava/lang/Object;
+      64: invokevirtual #1092               // Method java/util/LinkedHashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      67: checkcast     #1074               // class java/lang/Class
+      70: invokestatic  #1095               // Method com/shatteredpixel/shatteredpixeldungeon/items/Generator.random:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;
+      73: areturn
+      74: getstatic     #1099               // Field com/shatteredpixel/shatteredpixeldungeon/items/scrolls/exotic/ExoticScroll.regToExo:Ljava/util/LinkedHashMap;
+      77: aload_0
+      78: getfield      #110                // Field loot:Ljava/lang/Object;
+      81: invokevirtual #1082               // Method java/util/LinkedHashMap.containsKey:(Ljava/lang/Object;)Z
+      84: ifeq          114
+      87: invokestatic  #904                // Method com/watabou/utils/Random.Float:()F
+      90: invokestatic  #1087               // Method com/shatteredpixel/shatteredpixeldungeon/items/trinkets/ExoticCrystals.consumableExoticChance:()F
+      93: fcmpg
+      94: ifge          114
+      97: getstatic     #1099               // Field com/shatteredpixel/shatteredpixeldungeon/items/scrolls/exotic/ExoticScroll.regToExo:Ljava/util/LinkedHashMap;
+     100: aload_0
+     101: getfield      #110                // Field loot:Ljava/lang/Object;
+     104: invokevirtual #1092               // Method java/util/LinkedHashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+     107: checkcast     #1074               // class java/lang/Class
+     110: invokestatic  #1095               // Method com/shatteredpixel/shatteredpixeldungeon/items/Generator.random:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;
+     113: areturn
+     114: aload_0
+     115: getfield      #110                // Field loot:Ljava/lang/Object;
+     118: checkcast     #1074               // class java/lang/Class
+     121: invokestatic  #1095               // Method com/shatteredpixel/shatteredpixeldungeon/items/Generator.random:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/items/Item;
+     124: astore_1
+     125: goto          136
+     128: aload_0
+     129: getfield      #110                // Field loot:Ljava/lang/Object;
+     132: checkcast     #1048               // class com/shatteredpixel/shatteredpixeldungeon/items/Item
+     135: astore_1
+     136: aload_1
+     137: areturn
+
+  public float spawningWeight();
+    Code:
+       0: fconst_1
+       1: freturn
+
+  public boolean reset();
+    Code:
+       0: iconst_0
+       1: ireturn
+
+  public void beckon(int);
+    Code:
+       0: aload_0
+       1: invokevirtual #1102               // Method notice:()V
+       4: aload_0
+       5: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+       8: aload_0
+       9: getfield      #44                 // Field HUNTING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      12: if_acmpeq     34
+      15: aload_0
+      16: getfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      19: aload_0
+      20: getfield      #62                 // Field FLEEING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      23: if_acmpeq     34
+      26: aload_0
+      27: aload_0
+      28: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      31: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+      34: aload_0
+      35: iload_1
+      36: putfield      #74                 // Field target:I
+      39: return
+
+  public java.lang.String description();
+    Code:
+       0: aload_0
+       1: ldc_w         #1105               // String desc
+       4: iconst_0
+       5: anewarray     #365                // class java/lang/Object
+       8: invokestatic  #440                // Method com/shatteredpixel/shatteredpixeldungeon/messages/Messages.get:(Ljava/lang/Object;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+      11: areturn
+
+  public java.lang.String info();
+    Code:
+       0: aload_0
+       1: invokevirtual #1107               // Method description:()Ljava/lang/String;
+       4: astore_1
+       5: aload_0
+       6: ldc_w         #453                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/ChampionEnemy
+       9: invokevirtual #455                // Method buffs:(Ljava/lang/Class;)Ljava/util/HashSet;
+      12: invokevirtual #336                // Method java/util/HashSet.iterator:()Ljava/util/Iterator;
+      15: astore_2
+      16: aload_2
+      17: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+      22: ifeq          56
+      25: aload_2
+      26: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+      31: checkcast     #693                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff
+      34: astore_3
+      35: aload_1
+      36: aload_3
+      37: invokevirtual #1111               // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.name:()Ljava/lang/String;
+      40: invokestatic  #1114               // Method com/shatteredpixel/shatteredpixeldungeon/messages/Messages.titleCase:(Ljava/lang/String;)Ljava/lang/String;
+      43: aload_3
+      44: invokevirtual #1117               // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.desc:()Ljava/lang/String;
+      47: invokedynamic #1119,  0           // InvokeDynamic #0:makeConcatWithConstants:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+      52: astore_1
+      53: goto          16
+      56: aload_1
+      57: areturn
+
+  public void notice();
+    Code:
+       0: aload_0
+       1: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+       4: invokevirtual #241                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.showAlert:()V
+       7: return
+
+  public void yell(java.lang.String);
+    Code:
+       0: invokestatic  #1123               // Method com/shatteredpixel/shatteredpixeldungeon/utils/GLog.newLine:()V
+       3: ldc_w         #1126               // String %s: \"%s\"
+       6: iconst_2
+       7: anewarray     #365                // class java/lang/Object
+      10: dup
+      11: iconst_0
+      12: aload_0
+      13: invokevirtual #1128               // Method name:()Ljava/lang/String;
+      16: invokestatic  #1114               // Method com/shatteredpixel/shatteredpixeldungeon/messages/Messages.titleCase:(Ljava/lang/String;)Ljava/lang/String;
+      19: aastore
+      20: dup
+      21: iconst_1
+      22: aload_1
+      23: aastore
+      24: invokestatic  #1129               // Method com/shatteredpixel/shatteredpixeldungeon/utils/GLog.n:(Ljava/lang/String;[Ljava/lang/Object;)V
+      27: return
+
+  public com.shatteredpixel.shatteredpixeldungeon.journal.Notes$Landmark landmark();
+    Code:
+       0: aconst_null
+       1: areturn
+
+  public static void holdAllies(com.shatteredpixel.shatteredpixeldungeon.levels.Level);
+    Code:
+       0: aload_0
+       1: getstatic     #353                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+       4: getfield      #386                // Field com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero.pos:I
+       7: invokestatic  #1132               // Method holdAllies:(Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;I)V
+      10: return
+
+  public static void holdAllies(com.shatteredpixel.shatteredpixeldungeon.levels.Level, int);
+    Code:
+       0: getstatic     #1136               // Field heldAllies:Ljava/util/ArrayList;
+       3: invokevirtual #1139               // Method java/util/ArrayList.clear:()V
+       6: aload_0
+       7: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+      10: iconst_0
+      11: anewarray     #2                  // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+      14: invokevirtual #1142               // Method java/util/HashSet.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+      17: checkcast     #1146               // class "[Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;"
+      20: astore_2
+      21: aload_2
+      22: arraylength
+      23: istore_3
+      24: iconst_0
+      25: istore        4
+      27: iload         4
+      29: iload_3
+      30: if_icmpge     161
+      33: aload_2
+      34: iload         4
+      36: aaload
+      37: astore        5
+      39: aload         5
+      41: instanceof    #1148               // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/npcs/DirectableAlly
+      44: ifne          63
+      47: aload         5
+      49: getfield      #107                // Field intelligentAlly:Z
+      52: ifeq          101
+      55: invokestatic  #1150               // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany.getPoweredAlly:()Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+      58: aload         5
+      60: if_acmpne     101
+      63: aload         5
+      65: instanceof    #1148               // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/npcs/DirectableAlly
+      68: ifeq          79
+      71: aload         5
+      73: checkcast     #1148               // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/npcs/DirectableAlly
+      76: invokevirtual #1155               // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/npcs/DirectableAlly.clearDefensingPos:()V
+      79: aload_0
+      80: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+      83: aload         5
+      85: invokevirtual #392                // Method java/util/HashSet.remove:(Ljava/lang/Object;)Z
+      88: pop
+      89: getstatic     #1136               // Field heldAllies:Ljava/util/ArrayList;
+      92: aload         5
+      94: invokevirtual #669                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      97: pop
+      98: goto          155
+     101: aload         5
+     103: getfield      #29                 // Field alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     106: getstatic     #360                // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ALLY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+     109: if_acmpne     155
+     112: aload         5
+     114: getfield      #107                // Field intelligentAlly:Z
+     117: ifeq          155
+     120: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     123: iload_1
+     124: aload         5
+     126: getfield      #305                // Field pos:I
+     129: invokevirtual #510                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.distance:(II)I
+     132: iconst_5
+     133: if_icmpgt     155
+     136: aload_0
+     137: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+     140: aload         5
+     142: invokevirtual #392                // Method java/util/HashSet.remove:(Ljava/lang/Object;)Z
+     145: pop
+     146: getstatic     #1136               // Field heldAllies:Ljava/util/ArrayList;
+     149: aload         5
+     151: invokevirtual #669                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     154: pop
+     155: iinc          4, 1
+     158: goto          27
+     161: return
+
+  public static void restoreAllies(com.shatteredpixel.shatteredpixeldungeon.levels.Level, int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iconst_m1
+       3: invokestatic  #1158               // Method restoreAllies:(Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;II)V
+       6: return
+
+  public static void restoreAllies(com.shatteredpixel.shatteredpixeldungeon.levels.Level, int, int);
+    Code:
+       0: getstatic     #1136               // Field heldAllies:Ljava/util/ArrayList;
+       3: invokevirtual #1046               // Method java/util/ArrayList.isEmpty:()Z
+       6: ifne          431
+       9: new           #118                // class java/util/ArrayList
+      12: dup
+      13: invokespecial #120                // Method java/util/ArrayList."<init>":()V
+      16: astore_3
+      17: getstatic     #411                // Field com/watabou/utils/PathFinder.NEIGHBOURS8:[I
+      20: astore        4
+      22: aload         4
+      24: arraylength
+      25: istore        5
+      27: iconst_0
+      28: istore        6
+      30: iload         6
+      32: iload         5
+      34: if_icmpge     101
+      37: aload         4
+      39: iload         6
+      41: iaload
+      42: istore        7
+      44: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      47: getfield      #1162               // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.solid:[Z
+      50: iload         7
+      52: iload_1
+      53: iadd
+      54: baload
+      55: ifne          95
+      58: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      61: getfield      #465                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.avoid:[Z
+      64: iload         7
+      66: iload_1
+      67: iadd
+      68: baload
+      69: ifne          95
+      72: aload_0
+      73: iload         7
+      75: iload_1
+      76: iadd
+      77: invokevirtual #1165               // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.findMob:(I)Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;
+      80: ifnonnull     95
+      83: aload_3
+      84: iload         7
+      86: iload_1
+      87: iadd
+      88: invokestatic  #519                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+      91: invokevirtual #669                // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+      94: pop
+      95: iinc          6, 1
+      98: goto          30
+     101: iload_2
+     102: iconst_m1
+     103: if_icmpne     113
+     106: aload_3
+     107: invokestatic  #1169               // Method java/util/Collections.shuffle:(Ljava/util/List;)V
+     110: goto          125
+     113: aload_3
+     114: new           #1175               // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$1
+     117: dup
+     118: iload_2
+     119: invokespecial #1177               // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$1."<init>":(I)V
+     122: invokestatic  #1179               // Method java/util/Collections.sort:(Ljava/util/List;Ljava/util/Comparator;)V
+     125: invokestatic  #1183               // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/spells/Stasis.getStasisAlly:()Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+     128: ifnull        200
+     131: aload_0
+     132: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+     135: iconst_0
+     136: anewarray     #2                  // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+     139: invokevirtual #1142               // Method java/util/HashSet.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+     142: checkcast     #1146               // class "[Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;"
+     145: astore        4
+     147: aload         4
+     149: arraylength
+     150: istore        5
+     152: iconst_0
+     153: istore        6
+     155: iload         6
+     157: iload         5
+     159: if_icmpge     200
+     162: aload         4
+     164: iload         6
+     166: aaload
+     167: astore        7
+     169: aload         7
+     171: ldc_w         #291                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff
+     174: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     177: ifnull        194
+     180: aload         7
+     182: ldc_w         #291                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff
+     185: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     188: checkcast     #291                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff
+     191: invokevirtual #1188               // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff.detach:()V
+     194: iinc          6, 1
+     197: goto          155
+     200: getstatic     #1136               // Field heldAllies:Ljava/util/ArrayList;
+     203: invokevirtual #1047               // Method java/util/ArrayList.iterator:()Ljava/util/Iterator;
+     206: astore        4
+     208: aload         4
+     210: invokeinterface #342,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+     215: ifeq          431
+     218: aload         4
+     220: invokeinterface #347,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     225: checkcast     #2                  // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+     228: astore        5
+     230: aload         5
+     232: ldc_w         #291                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff
+     235: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     238: ifnull        310
+     241: aload_0
+     242: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+     245: iconst_0
+     246: anewarray     #2                  // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+     249: invokevirtual #1142               // Method java/util/HashSet.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+     252: checkcast     #1146               // class "[Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;"
+     255: astore        6
+     257: aload         6
+     259: arraylength
+     260: istore        7
+     262: iconst_0
+     263: istore        8
+     265: iload         8
+     267: iload         7
+     269: if_icmpge     310
+     272: aload         6
+     274: iload         8
+     276: aaload
+     277: astore        9
+     279: aload         9
+     281: ldc_w         #291                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff
+     284: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     287: ifnull        304
+     290: aload         9
+     292: ldc_w         #291                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff
+     295: invokevirtual #261                // Method buff:(Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     298: checkcast     #291                // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff
+     301: invokevirtual #1188               // Method com/shatteredpixel/shatteredpixeldungeon/actors/hero/abilities/cleric/PowerOfMany$PowerBuff.detach:()V
+     304: iinc          8, 1
+     307: goto          265
+     310: aload_0
+     311: getfield      #375                // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.mobs:Ljava/util/HashSet;
+     314: aload         5
+     316: invokevirtual #380                // Method java/util/HashSet.add:(Ljava/lang/Object;)Z
+     319: pop
+     320: aload         5
+     322: aload         5
+     324: getfield      #56                 // Field WANDERING:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     327: putfield      #71                 // Field state:Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob$AiState;
+     330: aload_3
+     331: invokevirtual #1046               // Method java/util/ArrayList.isEmpty:()Z
+     334: ifne          356
+     337: aload         5
+     339: aload_3
+     340: iconst_0
+     341: invokevirtual #1191               // Method java/util/ArrayList.remove:(I)Ljava/lang/Object;
+     344: checkcast     #408                // class java/lang/Integer
+     347: invokevirtual #506                // Method java/lang/Integer.intValue:()I
+     350: putfield      #305                // Field pos:I
+     353: goto          362
+     356: aload         5
+     358: iload_1
+     359: putfield      #305                // Field pos:I
+     362: aload         5
+     364: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+     367: ifnull        383
+     370: aload         5
+     372: getfield      #237                // Field sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+     375: aload         5
+     377: getfield      #305                // Field pos:I
+     380: invokevirtual #1194               // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.place:(I)V
+     383: aload         5
+     385: getfield      #274                // Field fieldOfView:[Z
+     388: ifnull        404
+     391: aload         5
+     393: getfield      #274                // Field fieldOfView:[Z
+     396: arraylength
+     397: aload_0
+     398: invokevirtual #735                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.length:()I
+     401: if_icmpeq     415
+     404: aload         5
+     406: aload_0
+     407: invokevirtual #735                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.length:()I
+     410: newarray       boolean
+     412: putfield      #274                // Field fieldOfView:[Z
+     415: getstatic     #293                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+     418: aload         5
+     420: aload         5
+     422: getfield      #274                // Field fieldOfView:[Z
+     425: invokevirtual #299                // Method com/shatteredpixel/shatteredpixeldungeon/levels/Level.updateFieldOfView:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;[Z)V
+     428: goto          208
+     431: getstatic     #1136               // Field heldAllies:Ljava/util/ArrayList;
+     434: invokevirtual #1139               // Method java/util/ArrayList.clear:()V
+     437: return
+
+  public static void clearHeldAllies();
+    Code:
+       0: getstatic     #1136               // Field heldAllies:Ljava/util/ArrayList;
+       3: invokevirtual #1139               // Method java/util/ArrayList.clear:()V
+       6: return
+
+  static void access$000(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$100(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$200(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$300(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$400(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static boolean access$500(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, int, int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: invokevirtual #7                  // Method moveSprite:(II)Z
+       6: ireturn
+
+  static void access$600(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$700(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$800(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static boolean access$900(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, int, int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: invokevirtual #7                  // Method moveSprite:(II)Z
+       6: ireturn
+
+  static void access$1000(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$1100(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$1200(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$1300(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static boolean access$1400(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, int, int);
+    Code:
+       0: aload_0
+       1: iload_1
+       2: iload_2
+       3: invokevirtual #7                  // Method moveSprite:(II)Z
+       6: ireturn
+
+  static void access$1500(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static void access$1600(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, float);
+    Code:
+       0: aload_0
+       1: fload_1
+       2: invokevirtual #1                  // Method spend:(F)V
+       5: return
+
+  static {};
+    Code:
+       0: new           #118                // class java/util/ArrayList
+       3: dup
+       4: invokespecial #120                // Method java/util/ArrayList."<init>":()V
+       7: putstatic     #1136               // Field heldAllies:Ljava/util/ArrayList;
+      10: return
+}

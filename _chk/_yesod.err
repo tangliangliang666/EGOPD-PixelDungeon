@@ -1,0 +1,14 @@
+java.lang.NullPointerException: Cannot invoke "com.badlogic.gdx.Application.getPreferences(String)" because "com.badlogic.gdx.Gdx.app" is null
+	at com.watabou.utils.GameSettings.get(GameSettings.java:36)
+	at com.watabou.utils.GameSettings.getString(GameSettings.java:107)
+	at com.watabou.utils.GameSettings.getString(GameSettings.java:102)
+	at com.shatteredpixel.shatteredpixeldungeon.SPDSettings.language(SPDSettings.java:508)
+	at com.shatteredpixel.shatteredpixeldungeon.messages.Messages.<clinit>(Messages.java:80)
+	at com.shatteredpixel.shatteredpixeldungeon.items.Item.trueName(Item.java:559)
+	at com.shatteredpixel.shatteredpixeldungeon.items.Item.name(Item.java:555)
+	at com.shatteredpixel.shatteredpixeldungeon.items.Item.title(Item.java:539)
+	at com.shatteredpixel.shatteredpixeldungeon.items.Heap.title(Heap.java:398)
+	at YesodProbe.lambda$main$3(YesodProbe.java:198)
+	at YesodProbe.softSection(YesodProbe.java:76)
+	at YesodProbe.main(YesodProbe.java:192)
+

@@ -1,0 +1,177 @@
+Compiled from "GeburaGrace.java"
+public class com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GeburaGrace extends com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff {
+  private int turnsLeft;
+
+  private transient java.lang.Object lethalSource;
+
+  private java.lang.String lethalSourceClass;
+
+  private static final java.lang.String TURNS_LEFT;
+
+  private static final java.lang.String SOURCE_CLASS;
+
+  public com.shatteredpixel.shatteredpixeldungeon.actors.buffs.GeburaGrace();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff."<init>":()V
+       4: aload_0
+       5: getstatic     #7                  // Field com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff$buffType.POSITIVE:Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff$buffType;
+       8: putfield      #13                 // Field type:Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff$buffType;
+      11: aload_0
+      12: iconst_1
+      13: putfield      #18                 // Field turnsLeft:I
+      16: aload_0
+      17: ldc           #22                 // String
+      19: putfield      #24                 // Field lethalSourceClass:Ljava/lang/String;
+      22: return
+
+  public void set(int, java.lang.Object);
+    Code:
+       0: aload_0
+       1: iconst_1
+       2: iload_1
+       3: invokestatic  #28                 // Method java/lang/Math.max:(II)I
+       6: putfield      #18                 // Field turnsLeft:I
+       9: aload_0
+      10: aload_2
+      11: putfield      #34                 // Field lethalSource:Ljava/lang/Object;
+      14: aload_0
+      15: aload_2
+      16: ifnonnull     24
+      19: ldc           #22                 // String
+      21: goto          31
+      24: aload_2
+      25: invokevirtual #38                 // Method java/lang/Object.getClass:()Ljava/lang/Class;
+      28: invokevirtual #44                 // Method java/lang/Class.getName:()Ljava/lang/String;
+      31: putfield      #24                 // Field lethalSourceClass:Ljava/lang/String;
+      34: return
+
+  public boolean attachTo(com.shatteredpixel.shatteredpixeldungeon.actors.Char);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #50                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.attachTo:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;)Z
+       5: ifeq          25
+       8: aload_1
+       9: instanceof    #54                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+      12: ifeq          23
+      15: aload_1
+      16: checkcast     #54                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+      19: iconst_1
+      20: putfield      #56                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.geburaGrace:Z
+      23: iconst_1
+      24: ireturn
+      25: iconst_0
+      26: ireturn
+
+  public void detach();
+    Code:
+       0: aload_0
+       1: getfield      #60                 // Field target:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+       4: instanceof    #54                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+       7: ifeq          21
+      10: aload_0
+      11: getfield      #60                 // Field target:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+      14: checkcast     #54                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+      17: iconst_0
+      18: putfield      #56                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.geburaGrace:Z
+      21: aload_0
+      22: invokespecial #64                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.detach:()V
+      25: return
+
+  public boolean act();
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #18                 // Field turnsLeft:I
+       5: iconst_1
+       6: isub
+       7: dup_x1
+       8: putfield      #18                 // Field turnsLeft:I
+      11: ifgt          97
+      14: aload_0
+      15: getfield      #60                 // Field target:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;
+      18: astore_1
+      19: aload_1
+      20: ifnull        34
+      23: aload_1
+      24: invokevirtual #67                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.isAlive:()Z
+      27: ifeq          34
+      30: iconst_1
+      31: goto          35
+      34: iconst_0
+      35: istore_2
+      36: aload_0
+      37: getfield      #34                 // Field lethalSource:Ljava/lang/Object;
+      40: astore_3
+      41: aload_3
+      42: ifnonnull     70
+      45: getstatic     #73                 // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      48: ifnull        70
+      51: ldc           #79                 // class com/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero
+      53: invokevirtual #44                 // Method java/lang/Class.getName:()Ljava/lang/String;
+      56: aload_0
+      57: getfield      #24                 // Field lethalSourceClass:Ljava/lang/String;
+      60: invokevirtual #81                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      63: ifeq          70
+      66: getstatic     #73                 // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      69: astore_3
+      70: aload_0
+      71: aconst_null
+      72: putfield      #34                 // Field lethalSource:Ljava/lang/Object;
+      75: aload_0
+      76: invokevirtual #87                 // Method detach:()V
+      79: iload_2
+      80: ifeq          95
+      83: aload_1
+      84: instanceof    #54                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+      87: ifeq          95
+      90: aload_1
+      91: aload_3
+      92: invokevirtual #88                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.die:(Ljava/lang/Object;)V
+      95: iconst_1
+      96: ireturn
+      97: aload_0
+      98: fconst_1
+      99: invokevirtual #94                 // Method spend:(F)V
+     102: iconst_1
+     103: ireturn
+
+  public void storeInBundle(com.watabou.utils.Bundle);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #98                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.storeInBundle:(Lcom/watabou/utils/Bundle;)V
+       5: aload_1
+       6: ldc           #102                // String turns_left
+       8: aload_0
+       9: getfield      #18                 // Field turnsLeft:I
+      12: invokevirtual #104                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;I)V
+      15: aload_1
+      16: ldc           #110                // String source_class
+      18: aload_0
+      19: getfield      #24                 // Field lethalSourceClass:Ljava/lang/String;
+      22: invokevirtual #112                // Method com/watabou/utils/Bundle.put:(Ljava/lang/String;Ljava/lang/String;)V
+      25: return
+
+  public void restoreFromBundle(com.watabou.utils.Bundle);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #115                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.restoreFromBundle:(Lcom/watabou/utils/Bundle;)V
+       5: aload_0
+       6: aload_1
+       7: ldc           #102                // String turns_left
+       9: invokevirtual #118                // Method com/watabou/utils/Bundle.getInt:(Ljava/lang/String;)I
+      12: putfield      #18                 // Field turnsLeft:I
+      15: aload_1
+      16: ldc           #110                // String source_class
+      18: invokevirtual #122                // Method com/watabou/utils/Bundle.contains:(Ljava/lang/String;)Z
+      21: ifeq          34
+      24: aload_0
+      25: aload_1
+      26: ldc           #110                // String source_class
+      28: invokevirtual #126                // Method com/watabou/utils/Bundle.getString:(Ljava/lang/String;)Ljava/lang/String;
+      31: putfield      #24                 // Field lethalSourceClass:Ljava/lang/String;
+      34: return
+}

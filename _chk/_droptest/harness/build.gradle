@@ -1,0 +1,10 @@
+allprojects {
+    ext {
+        gdxVersion = '1.14.0'
+        appJavaCompatibility = JavaVersion.VERSION_11
+    }
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenCentral()
+    }
+}

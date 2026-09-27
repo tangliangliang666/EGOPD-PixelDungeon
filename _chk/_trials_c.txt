@@ -1,0 +1,510 @@
+Compiled from "Trials.java"
+public class com.shatteredpixel.shatteredpixeldungeon.Trials {
+  public static final int KETER;
+
+  public static final int HOKMA;
+
+  public static final int BINAH;
+
+  public static final int CHESED;
+
+  public static final int GEBURA;
+
+  public static final int TIPHERETH;
+
+  public static final int NETZACH;
+
+  public static final int HOD;
+
+  public static final int YESOD;
+
+  public static final int MALKUTH;
+
+  public static final int MAX_VALUE;
+
+  public static final int MAX_TRIALS;
+
+  public static final java.lang.String[] NAME_IDS;
+
+  public static final int[] MASKS;
+
+  public static final int ICON_FRAME;
+
+  public static final int ICON_COLS;
+
+  public static final int[] ICON_W;
+
+  public static final int[] ICON_H;
+
+  public static final float HERO_MOVE_DELAY_MIN;
+
+  public static final float ENEMY_MOVE_DELAY_MAX;
+
+  public static final float HERO_ATTACK_DELAY_MIN;
+
+  public static final float CHESED_HP_MULT;
+
+  public static final int CHESED_MEND_TURNS;
+
+  public static final float CHESED_MEND_PERCENT;
+
+  public com.shatteredpixel.shatteredpixeldungeon.Trials();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static float modifyMoveSpeed(com.shatteredpixel.shatteredpixeldungeon.actors.Char, float);
+    Code:
+       0: aload_0
+       1: ifnull        11
+       4: iconst_2
+       5: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       8: ifne          13
+      11: fload_1
+      12: freturn
+      13: aload_0
+      14: getstatic     #15                 // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.hero:Lcom/shatteredpixel/shatteredpixeldungeon/actors/hero/Hero;
+      17: if_acmpne     26
+      20: fload_1
+      21: fconst_1
+      22: invokestatic  #19                 // Method java/lang/Math.min:(FF)F
+      25: freturn
+      26: aload_0
+      27: getfield      #25                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      30: getstatic     #31                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      33: if_acmpne     42
+      36: fload_1
+      37: fconst_1
+      38: invokestatic  #36                 // Method java/lang/Math.max:(FF)F
+      41: freturn
+      42: fload_1
+      43: freturn
+
+  public static float modifyHeroMoveDelay(float);
+    Code:
+       0: iconst_2
+       1: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       4: ifne          9
+       7: fload_0
+       8: freturn
+       9: fload_0
+      10: fconst_1
+      11: invokestatic  #36                 // Method java/lang/Math.max:(FF)F
+      14: freturn
+
+  public static float modifyHeroAttackDelay(float);
+    Code:
+       0: iconst_2
+       1: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       4: ifne          9
+       7: fload_0
+       8: freturn
+       9: fload_0
+      10: ldc           #39                 // float 0.5f
+      12: invokestatic  #36                 // Method java/lang/Math.max:(FF)F
+      15: freturn
+
+  public static com.shatteredpixel.shatteredpixeldungeon.items.Item modifyGeneratedItem(com.shatteredpixel.shatteredpixeldungeon.items.Item);
+    Code:
+       0: aload_0
+       1: ifnull        11
+       4: iconst_4
+       5: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       8: ifne          13
+      11: aload_0
+      12: areturn
+      13: aload_0
+      14: invokevirtual #40                 // Method com/shatteredpixel/shatteredpixeldungeon/items/Item.trueLevel:()I
+      17: istore_1
+      18: aload_0
+      19: getfield      #46                 // Field com/shatteredpixel/shatteredpixeldungeon/items/Item.cursed:Z
+      22: ifeq          28
+      25: iload_1
+      26: ineg
+      27: istore_1
+      28: iload_1
+      29: ifle          34
+      32: iconst_0
+      33: istore_1
+      34: iload_1
+      35: aload_0
+      36: invokevirtual #40                 // Method com/shatteredpixel/shatteredpixeldungeon/items/Item.trueLevel:()I
+      39: if_icmpeq     47
+      42: aload_0
+      43: iload_1
+      44: invokevirtual #50                 // Method com/shatteredpixel/shatteredpixeldungeon/items/Item.level:(I)V
+      47: aload_0
+      48: areturn
+
+  public static void flattenQuestReward(com.shatteredpixel.shatteredpixeldungeon.items.Item);
+    Code:
+       0: aload_0
+       1: ifnull        11
+       4: iconst_4
+       5: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       8: ifne          12
+      11: return
+      12: aload_0
+      13: invokevirtual #40                 // Method com/shatteredpixel/shatteredpixeldungeon/items/Item.trueLevel:()I
+      16: ifeq          24
+      19: aload_0
+      20: iconst_0
+      21: invokevirtual #50                 // Method com/shatteredpixel/shatteredpixeldungeon/items/Item.level:(I)V
+      24: return
+
+  public static void curseReverseLevel(com.shatteredpixel.shatteredpixeldungeon.items.Item);
+    Code:
+       0: aload_0
+       1: ifnull        11
+       4: iconst_4
+       5: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       8: ifne          12
+      11: return
+      12: aload_0
+      13: invokevirtual #40                 // Method com/shatteredpixel/shatteredpixeldungeon/items/Item.trueLevel:()I
+      16: istore_1
+      17: iload_1
+      18: ifle          27
+      21: aload_0
+      22: iload_1
+      23: ineg
+      24: invokevirtual #50                 // Method com/shatteredpixel/shatteredpixeldungeon/items/Item.level:(I)V
+      27: return
+
+  public static int modifyMobHT(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob, int);
+    Code:
+       0: aload_0
+       1: ifnull        12
+       4: bipush        8
+       6: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       9: ifne          14
+      12: iload_1
+      13: ireturn
+      14: aload_0
+      15: getfield      #54                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      18: getstatic     #31                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      21: if_acmpeq     26
+      24: iload_1
+      25: ireturn
+      26: iload_1
+      27: i2f
+      28: ldc           #57                 // float 1.25f
+      30: fmul
+      31: invokestatic  #58                 // Method java/lang/Math.round:(F)I
+      34: ireturn
+
+  public static void bindMobPassives(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob);
+    Code:
+       0: aload_0
+       1: ifnull        12
+       4: bipush        8
+       6: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       9: ifne          13
+      12: return
+      13: aload_0
+      14: ldc           #62                 // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/ChesedMend
+      16: invokestatic  #64                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.affect:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+      19: pop
+      20: return
+
+  public static int geburaGraceTurns(com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob);
+    Code:
+       0: iconst_0
+       1: aload_0
+       2: getfield      #70                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.EXP:I
+       5: invokestatic  #74                 // Method java/lang/Math.max:(II)I
+       8: ireturn
+
+  public static boolean interceptLethalDamage(com.shatteredpixel.shatteredpixeldungeon.actors.Char, java.lang.Object);
+    Code:
+       0: bipush        16
+       2: invokestatic  #9                  // Method com/shatteredpixel/shatteredpixeldungeon/Dungeon.isTrialled:(I)Z
+       5: ifeq          15
+       8: aload_0
+       9: instanceof    #55                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+      12: ifne          17
+      15: iconst_0
+      16: ireturn
+      17: aload_0
+      18: invokevirtual #77                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/Char.isAlive:()Z
+      21: ifeq          26
+      24: iconst_0
+      25: ireturn
+      26: aload_0
+      27: getfield      #25                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.alignment:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      30: getstatic     #31                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment.ENEMY:Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char$Alignment;
+      33: if_acmpeq     38
+      36: iconst_0
+      37: ireturn
+      38: aload_0
+      39: checkcast     #55                 // class com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob
+      42: astore_2
+      43: aload_2
+      44: getfield      #81                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.geburaUsed:Z
+      47: ifeq          52
+      50: iconst_0
+      51: ireturn
+      52: aload_2
+      53: aload_1
+      54: invokevirtual #84                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.deathIsDeferred:(Ljava/lang/Object;)Z
+      57: ifeq          62
+      60: iconst_0
+      61: ireturn
+      62: getstatic     #88                 // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      65: ifnull        84
+      68: getstatic     #88                 // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.level:Lcom/shatteredpixel/shatteredpixeldungeon/levels/Level;
+      71: getfield      #91                 // Field com/shatteredpixel/shatteredpixeldungeon/levels/Level.pit:[Z
+      74: aload_0
+      75: getfield      #97                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/Char.pos:I
+      78: baload
+      79: ifeq          84
+      82: iconst_0
+      83: ireturn
+      84: aload_2
+      85: invokestatic  #100                // Method geburaGraceTurns:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob;)I
+      88: istore_3
+      89: iload_3
+      90: ifgt          95
+      93: iconst_0
+      94: ireturn
+      95: aload_2
+      96: iconst_1
+      97: putfield      #81                 // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.geburaUsed:Z
+     100: aload_2
+     101: iconst_1
+     102: putfield      #104                // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.geburaStagger:Z
+     105: aload_2
+     106: ldc           #107                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/GeburaGrace
+     108: invokestatic  #64                 // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff.affect:(Lcom/shatteredpixel/shatteredpixeldungeon/actors/Char;Ljava/lang/Class;)Lcom/shatteredpixel/shatteredpixeldungeon/actors/buffs/Buff;
+     111: checkcast     #107                // class com/shatteredpixel/shatteredpixeldungeon/actors/buffs/GeburaGrace
+     114: iload_3
+     115: aload_1
+     116: invokevirtual #109                // Method com/shatteredpixel/shatteredpixeldungeon/actors/buffs/GeburaGrace.set:(ILjava/lang/Object;)V
+     119: aload_2
+     120: getfield      #113                // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+     123: ifnull        150
+     126: aload_2
+     127: getfield      #113                // Field com/shatteredpixel/shatteredpixeldungeon/actors/mobs/Mob.sprite:Lcom/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite;
+     130: ldc           #119                // int 65280
+     132: ldc           #26                 // class com/shatteredpixel/shatteredpixeldungeon/actors/Char
+     134: ldc           #120                // String invulnerable
+     136: iconst_0
+     137: anewarray     #2                  // class java/lang/Object
+     140: invokestatic  #122                // Method com/shatteredpixel/shatteredpixeldungeon/messages/Messages.get:(Ljava/lang/Class;Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+     143: iconst_0
+     144: anewarray     #2                  // class java/lang/Object
+     147: invokevirtual #128                // Method com/shatteredpixel/shatteredpixeldungeon/sprites/CharSprite.showStatus:(ILjava/lang/String;[Ljava/lang/Object;)V
+     150: iconst_1
+     151: ireturn
+
+  public static int activeTrials();
+    Code:
+       0: getstatic     #132                // Field com/shatteredpixel/shatteredpixeldungeon/Dungeon.trials:I
+       3: invokestatic  #135                // Method activeTrials:(I)I
+       6: ireturn
+
+  public static int activeTrials(int);
+    Code:
+       0: iconst_0
+       1: istore_1
+       2: getstatic     #139                // Field MASKS:[I
+       5: astore_2
+       6: aload_2
+       7: arraylength
+       8: istore_3
+       9: iconst_0
+      10: istore        4
+      12: iload         4
+      14: iload_3
+      15: if_icmpge     40
+      18: aload_2
+      19: iload         4
+      21: iaload
+      22: istore        5
+      24: iload_0
+      25: iload         5
+      27: iand
+      28: ifeq          34
+      31: iinc          1, 1
+      34: iinc          4, 1
+      37: goto          12
+      40: iload_1
+      41: ireturn
+
+  static {};
+    Code:
+       0: bipush        10
+       2: anewarray     #143                // class java/lang/String
+       5: dup
+       6: iconst_0
+       7: ldc           #145                // String keter
+       9: aastore
+      10: dup
+      11: iconst_1
+      12: ldc           #147                // String hokma
+      14: aastore
+      15: dup
+      16: iconst_2
+      17: ldc           #149                // String binah
+      19: aastore
+      20: dup
+      21: iconst_3
+      22: ldc           #151                // String chesed
+      24: aastore
+      25: dup
+      26: iconst_4
+      27: ldc           #153                // String gebura
+      29: aastore
+      30: dup
+      31: iconst_5
+      32: ldc           #155                // String tiphereth
+      34: aastore
+      35: dup
+      36: bipush        6
+      38: ldc           #157                // String netzach
+      40: aastore
+      41: dup
+      42: bipush        7
+      44: ldc           #159                // String hod
+      46: aastore
+      47: dup
+      48: bipush        8
+      50: ldc           #161                // String yesod
+      52: aastore
+      53: dup
+      54: bipush        9
+      56: ldc           #163                // String malkuth
+      58: aastore
+      59: putstatic     #165                // Field NAME_IDS:[Ljava/lang/String;
+      62: bipush        10
+      64: newarray       int
+      66: dup
+      67: iconst_0
+      68: iconst_1
+      69: iastore
+      70: dup
+      71: iconst_1
+      72: iconst_2
+      73: iastore
+      74: dup
+      75: iconst_2
+      76: iconst_4
+      77: iastore
+      78: dup
+      79: iconst_3
+      80: bipush        8
+      82: iastore
+      83: dup
+      84: iconst_4
+      85: bipush        16
+      87: iastore
+      88: dup
+      89: iconst_5
+      90: bipush        32
+      92: iastore
+      93: dup
+      94: bipush        6
+      96: bipush        64
+      98: iastore
+      99: dup
+     100: bipush        7
+     102: sipush        128
+     105: iastore
+     106: dup
+     107: bipush        8
+     109: sipush        256
+     112: iastore
+     113: dup
+     114: bipush        9
+     116: sipush        512
+     119: iastore
+     120: putstatic     #139                // Field MASKS:[I
+     123: bipush        10
+     125: newarray       int
+     127: dup
+     128: iconst_0
+     129: bipush        16
+     131: iastore
+     132: dup
+     133: iconst_1
+     134: bipush        15
+     136: iastore
+     137: dup
+     138: iconst_2
+     139: bipush        15
+     141: iastore
+     142: dup
+     143: iconst_3
+     144: bipush        15
+     146: iastore
+     147: dup
+     148: iconst_4
+     149: bipush        13
+     151: iastore
+     152: dup
+     153: iconst_5
+     154: bipush        16
+     156: iastore
+     157: dup
+     158: bipush        6
+     160: bipush        16
+     162: iastore
+     163: dup
+     164: bipush        7
+     166: bipush        16
+     168: iastore
+     169: dup
+     170: bipush        8
+     172: bipush        16
+     174: iastore
+     175: dup
+     176: bipush        9
+     178: bipush        16
+     180: iastore
+     181: putstatic     #169                // Field ICON_W:[I
+     184: bipush        10
+     186: newarray       int
+     188: dup
+     189: iconst_0
+     190: bipush        16
+     192: iastore
+     193: dup
+     194: iconst_1
+     195: bipush        13
+     197: iastore
+     198: dup
+     199: iconst_2
+     200: bipush        14
+     202: iastore
+     203: dup
+     204: iconst_3
+     205: bipush        14
+     207: iastore
+     208: dup
+     209: iconst_4
+     210: bipush        16
+     212: iastore
+     213: dup
+     214: iconst_5
+     215: bipush        16
+     217: iastore
+     218: dup
+     219: bipush        6
+     221: bipush        16
+     223: iastore
+     224: dup
+     225: bipush        7
+     227: bipush        16
+     229: iastore
+     230: dup
+     231: bipush        8
+     233: bipush        16
+     235: iastore
+     236: dup
+     237: bipush        9
+     239: bipush        16
+     241: iastore
+     242: putstatic     #172                // Field ICON_H:[I
+     245: return
+}

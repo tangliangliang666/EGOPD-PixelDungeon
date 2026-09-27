@@ -1,0 +1,33 @@
+diff --git a/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/armor/ClassArmor.java b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/armor/ClassArmor.java
+index 92ac1e3..9c9d91e 100644
+--- a/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/armor/ClassArmor.java
++++ b/core/src/main/java/com/shatteredpixel/shatteredpixeldungeon/items/armor/ClassArmor.java
+@@ -118,6 +118,18 @@ abstract public class ClassArmor extends Armor {
+ 			case CLERIC:
+ 				classArmor = new ClericArmor();
+ 				break;
++			case ORACLE:
++				classArmor = new IndexFingerSuit();
++				break;
++			case RING_MASTER:
++				classArmor = new RingRobe();
++				break;
++			case VALENCINA:
++				classArmor = new ThumbCoat(); //鎷囨寚 鍓嶄簩鑰佹澘鑱屼笟鎶ょ敳锛氭媷鎸囧ぇ琛?
++				break;
++			case MIDDLE_FINGER:
++				classArmor = new MiddleFingerCoat(); //涓寚 闀垮厔鑱屼笟鎶ょ敳锛氫腑鎸囧濂?
++				break;
+ 		}
+ 		
+ 		classArmor.level(armor.trueLevel());
+@@ -299,7 +311,8 @@ abstract public class ClassArmor extends Armor {
+ 		if (Dungeon.hero != null && Dungeon.hero.belongings.contains(this)) {
+ 			ArmorAbility ability = Dungeon.hero.armorAbility;
+ 			if (ability != null) {
+-				desc += "\n\n" + ability.shortDesc();
++				//带上技能名，否则光看描述认不出装的是哪一门技能（见 ArmorAbility.namedShortDesc()）
++				desc += "\n\n" + ability.namedShortDesc();
+ 				float chargeUse = ability.chargeUse(Dungeon.hero);
+ 				//trinity has variable charge cost
+ 				if (!(ability instanceof Trinity)) {

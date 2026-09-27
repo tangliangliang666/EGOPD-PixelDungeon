@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        //国内镜像优先（加速依赖下载）
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:9.1.0'
+    }
+}
+
+allprojects {
+
+    ext {
+        appName = 'EGOPD'
+        appPackageName = 'com.mypd.mypixeldungeon'
+
+        appVersionCode = 936
+        appVersionName = '0.3.6'
+
+        appJavaCompatibility = JavaVersion.VERSION_11
+
+        appAndroidCompileSDK = 36   //Android 15
+        appAndroidMinSDK = 21       //Android 5.0
+        appAndroidTargetSDK = 36    //Android 15
+
+        gdxVersion = '1.14.0'
+        gdxControllersVersion = '2.2.4'
+        robovmVersion = '2.3.24'
+    }
+    version = appVersionName
+
+    repositories {
+        //国内镜像优先（加速依赖下载）
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        google()
+        mavenCentral()
+        maven { url 'https://central.sonatype.com/repository/maven-snapshots/' }
+    }
+
+}

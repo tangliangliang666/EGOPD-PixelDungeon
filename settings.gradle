@@ -1,0 +1,20 @@
+//core game code modules
+include ':SPD-classes'
+include ':core'
+
+//standalone, game-agnostic debug console library (see debug-console/README.md)
+include ':debug-console'
+
+//platform modules
+include ':android'
+include ':ios'
+include ':desktop'
+
+//service modules
+include ':services'
+    //updates
+    include ':services:updates:debugUpdates'
+    include ':services:updates:githubUpdates'
+    //news
+    include ':services:news:debugNews'
+    include ':services:news:shatteredNews'

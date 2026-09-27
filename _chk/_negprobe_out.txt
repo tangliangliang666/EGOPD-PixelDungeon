@@ -1,0 +1,96 @@
+=== 负数道具等级调研探针 ===
+
+--- A. 数据层：等级能变负、能存档往返、显示格式 ---
+  [OK]   degrade(3) 后 level() == -3（Item 基类无下限夹取）
+  [OK]   trueLevel() == -3
+  [OK]   %+d 于 -3 => "-3"（负数不带 +）
+  [OK]   %+d 于 -1 => "-1"
+  [OK]   %+d 于 +2 => "+2"（正数保留 +）
+  [OK]   %+d 于 0 => "+0"（但 levelDisplay 对 0 返回 null，实际不显示）
+  [OK]   存档往返保住负数等级：-5 -> -5
+  [OK]   存档往返保住正数等级：+4 -> 4
+  [OK]   存档往返保住 -11 -> -11
+
+--- B. 近战武器 Shortsword(tier 2)：伤害负向传递，无夹取 ---
+   等级 |  min() |  max() | STRReq | value()
+      0 |      2 |     15 |     12 |      40
+     -1 |      1 |     12 |     12 |      40
+     -2 |      0 |      9 |     12 |      40
+     -3 |     -1 |      6 |     12 |      40
+     -5 |     -3 |      0 |     12 |      40
+    -10 |     -8 |    -15 |     12 |      40
+  [OK]   tier2/-3 的 min() 为负（实得 -1）⇒ 可掷出负伤害
+  [OK]   tier2/-10 时 min(-8) > max(-15) ⇒ 区间反序（NormalIntRange 仍能算，不抛异常）
+  [OK]   STRReq 对负等级夹到 0（-5 与 +0 同需求 12）
+  [OK]   value() 对负等级无折价（-5 与 +0 同价 40）
+
+--- C. 法杖 WandOfMagicMissile：充能上限可 <= 0（死杖） ---
+   WandOfMagicMissile.initialCharges() = 3  ⇒ maxCharges = min(3 + level, 10)
+   等级 | maxCharges | curCharges | value()
+      0 |          3 |          3 |      75
+  [INFO] level 0 -> maxCharges = 3
+     -1 |          2 |          2 |      37
+     -3 |          0 |          0 |      18
+  [OK]   level -3 时 maxCharges == 0 ⇒ 永远充不上电（curCharges < maxCharges 恒 false）⇒ 死杖
+     -4 |         -1 |         -1 |      15
+     -6 |         -3 |         -3 |      10
+  [OK]   level -6 时 maxCharges = -3（**负充能，无 Math.max(0,..) 保护**）
+  [OK]   value() 对负等级走显式折价分支且 >= 1（实得 18）
+
+--- D. 戒指 RingOfHaste：加成 = level+1，可为负 ---
+   等级 | soloBonus(=level+1) | value()
+      0 |                   1 |      75
+     -1 |                   0 |      37
+     -2 |                  -1 |      25
+     -3 |                  -2 |      18
+     -5 |                  -4 |      12
+  [OK]   -1 时 soloBonus == 0
+  [OK]   -3 时 soloBonus == -2 ⇒ pow(1.175,-2) < 1 ⇒ 急速戒指反而**变慢**
+  [OK]   value() 对负等级走显式折价分支（实得 18）
+
+--- E. 防具：DR 在负等级处非单调（反弹） ---
+   PlateArmor(tier 5)  等级 | DRMin | DRMax | STRReq | value()
+                       0 |     0 |    10 |     18 |     100
+                      -1 |    -1 |     5 |     18 |     100
+                      -2 |    -2 |     0 |     18 |     100
+                      -3 |    -3 |     1 |     18 |     100
+                      -4 |    -4 |     3 |     18 |     100
+                      -6 |    -6 |     7 |     18 |     100
+                     -10 |   -10 |    15 |     18 |     100
+  [OK]   tier5/-2 时 DRMax == 0（5*(2-2)）
+  [OK]   tier5/-3 时 DRMax 反弹为 1（比 -2 的 0 更高）⇒ 公式 if(lvl>max) 分支被误触发，DR 非单调
+
+   LeatherArmor(tier 2)  等级 | DRMin | DRMax
+                         0 |     0 |     4
+                        -1 |    -1 |     2
+                        -2 |    -2 |     0
+                        -3 |    -3 |    -2
+                        -5 |    -5 |     1
+                       -10 |   -10 |     3
+
+--- F. 投掷武器 ThrowingKnife：伤害被 Math.max(0,..) 夹到 0 ---
+   等级 | min() | max() | durabilityPerUse()
+      0 |     2 |     6 |              20.00
+     -1 |     1 |     4 |              33.33
+     -2 |     0 |     2 |              50.00
+     -5 |     0 |     0 |             100.00
+    -20 |     0 |     0 |           Infinity
+  [OK]   -20 时 min/max 都是 0（投掷武器显式 Math.max(0,..) 夹取，不会负伤害）
+  [OK]   -20 时 durabilityPerUse = Infinity > 耐久上限 ⇒ 一掷即碎
+
+--- G. 字母制等级显示（本作自定） ---
+   0..6 -> F D C B A- A A+   (F D C B A- A A+)
+  [OK]   等级 0 显示 F（字母制下 0 有显示）
+  [OK]   等级 9 封顶显示 A+
+   （负数分支 if (buffedLvl < 0) return super.levelDisplay(buffedLvl); 会调 Messages，脱离游戏无法运行时验证 —— 已在源码层确认）
+
+--- H. 边界语义：upgrade(-n)/degrade(-n) 是空操作 ---
+  [OK]   upgrade(3) -> 3
+  [OK]   upgrade(-1) 不降级（for i<n，n<=0 直接不跑）
+  [OK]   degrade(-2) 不升级
+  [OK]   degrade(10) 一路降到 -7（无「不低于 0」拦截）
+  [OK]   再 upgrade(7) 回到 0（可往复穿越 0）
+
+============================================================
+全部符合预期
+============================================================

@@ -1,0 +1,75 @@
+=== ① 十个常量存在、image 索引连号 128~137、类型 LOCAL ===
+[OK] Badge.TRIAL_KETER      image=128（期望 128）
+[OK] Badge.TRIAL_KETER      type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_HOKMA      image=129（期望 129）
+[OK] Badge.TRIAL_HOKMA      type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_BINAH      image=130（期望 130）
+[OK] Badge.TRIAL_BINAH      type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_CHESED     image=131（期望 131）
+[OK] Badge.TRIAL_CHESED     type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_GEBURA     image=132（期望 132）
+[OK] Badge.TRIAL_GEBURA     type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_TIPHERETH  image=133（期望 133）
+[OK] Badge.TRIAL_TIPHERETH  type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_NETZACH    image=134（期望 134）
+[OK] Badge.TRIAL_NETZACH    type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_HOD        image=135（期望 135）
+[OK] Badge.TRIAL_HOD        type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_YESOD      image=136（期望 136）
+[OK] Badge.TRIAL_YESOD      type=LOCAL（实际 LOCAL）
+[OK] Badge.TRIAL_MALKUTH    image=137（期望 137）
+[OK] Badge.TRIAL_MALKUTH    type=LOCAL（实际 LOCAL）
+
+=== ② 声明顺序：这 10 个必须是 Badge 的**最后 10 个**，且顺序 KETER→MALKUTH ===
+[OK] Badge 常量总数 = 151
+[OK] 倒数第 10 个是 TRIAL_KETER
+[OK] 倒数第 9 个是 TRIAL_HOKMA
+[OK] 倒数第 8 个是 TRIAL_BINAH
+[OK] 倒数第 7 个是 TRIAL_CHESED
+[OK] 倒数第 6 个是 TRIAL_GEBURA
+[OK] 倒数第 5 个是 TRIAL_TIPHERETH
+[OK] 倒数第 4 个是 TRIAL_NETZACH
+[OK] 倒数第 3 个是 TRIAL_HOD
+[OK] 倒数第 2 个是 TRIAL_YESOD
+[OK] 倒数第 1 个是 TRIAL_MALKUTH
+
+=== ③ 私有数组 TRIAL_BADGES 的下标顺序 == Trials.MASKS 的顺序 ===
+[OK] TRIAL_BADGES 是 private static final
+[OK] TRIAL_BADGES.length = 10
+[OK] TRIAL_BADGES[0] = TRIAL_KETER（期望 TRIAL_KETER）
+[OK] TRIAL_BADGES[1] = TRIAL_HOKMA（期望 TRIAL_HOKMA）
+[OK] TRIAL_BADGES[2] = TRIAL_BINAH（期望 TRIAL_BINAH）
+[OK] TRIAL_BADGES[3] = TRIAL_CHESED（期望 TRIAL_CHESED）
+[OK] TRIAL_BADGES[4] = TRIAL_GEBURA（期望 TRIAL_GEBURA）
+[OK] TRIAL_BADGES[5] = TRIAL_TIPHERETH（期望 TRIAL_TIPHERETH）
+[OK] TRIAL_BADGES[6] = TRIAL_NETZACH（期望 TRIAL_NETZACH）
+[OK] TRIAL_BADGES[7] = TRIAL_HOD（期望 TRIAL_HOD）
+[OK] TRIAL_BADGES[8] = TRIAL_YESOD（期望 TRIAL_YESOD）
+[OK] TRIAL_BADGES[9] = TRIAL_MALKUTH（期望 TRIAL_MALKUTH）
+
+=== ④ Trials.MASKS 与常量同序（1<<i），且与 TRIAL_BADGES 一一对应 ===
+[OK] Trials.MASKS.length = 10
+[OK] Trials.MASKS[0] = 1（期望 1）
+[OK] Trials.MASKS[1] = 2（期望 2）
+[OK] Trials.MASKS[2] = 4（期望 4）
+[OK] Trials.MASKS[3] = 8（期望 8）
+[OK] Trials.MASKS[4] = 16（期望 16）
+[OK] Trials.MASKS[5] = 32（期望 32）
+[OK] Trials.MASKS[6] = 64（期望 64）
+[OK] Trials.MASKS[7] = 128（期望 128）
+[OK] Trials.MASKS[8] = 256（期望 256）
+[OK] Trials.MASKS[9] = 512（期望 512）
+[OK] TRIAL_BADGES[i].image == 128+i 对全部 i 成立（10/10）
+
+=== ⑤ validateTrialVictory 签名 ===
+[OK] validateTrialVictory 是 public static
+[OK] 返回 void
+[OK] 无参数
+
+=== ⑥ image 索引全库唯一、且 128~137 独占（不与既有徽章撞车）===
+[OK] 有图徽章的 image 索引无重复
+[OK] 旧的最高 image 索引 = 127（实际 127）
+[OK] 128~137 十个索引都被占用（缺 0 个）
+
+PASS=61  FAIL=0
+ALL PASS

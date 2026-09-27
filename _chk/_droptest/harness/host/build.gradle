@@ -1,0 +1,6 @@
+apply plugin: 'java-library'
+java.sourceCompatibility = java.targetCompatibility = appJavaCompatibility
+dependencies {
+    api project(':debug-console')
+    api project(':my-noosa')
+}

@@ -1,0 +1,11 @@
+apply plugin: 'java-library'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+java.sourceCompatibility = java.targetCompatibility = appJavaCompatibility
+
+dependencies {
+    api project(':SPD-classes')
+    implementation project(':services')
+    //standalone debug console library; :core supplies the game-side adapter for it
+    implementation project(':debug-console')
+}
