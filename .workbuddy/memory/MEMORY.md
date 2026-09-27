@@ -13,6 +13,7 @@
 - zh/en 双份（`*_zh-hant.properties` **不维护**自定义内容）；改一处必查另一处；换行只认字面 `\n`；别 heredoc 传含转义 Python。
 - `desc` 从 `_+1：_` 起笔、层级标签首档也带下划线；数值只写文本、`GLog` 不带数字；列表类技能走 `ArmorAbility.namedShortDesc()`。
 - 补丁脚本**幂等**＋比位置断言＋留 `_chk/_bak_*/`；核验脚本先剥注释（**保偏移** `strip_comments`）；锚点先 grep 确认在**本文件**、`[SKIP]` 当失败看。
+- **远程仓库**：`origin`＝自己的 GitHub（Public，`tangliangliang666/EGOPD-PixelDungeon`）／`upstream`＝原版 `00-Evan`（只读，供对照与合并新版本）。`tools/`（JDK/SDK/Gradle，903MB）、构建产物、APK、`_bak_*`、日志一律不入库；**APK 走 Releases**。行尾由 `.gitattributes` 的 `* -text` 锁死（**别开 `core.autocrlf`**，否则克隆出行尾与本地不一致、`_chk` 字节级脚本失效）。
 
 ## 静默陷阱（详版 `docs/handbook/pitfalls.md`）
 - **计数类图标与自然尺寸耦合**：`icons.png` rect 的 `w/h` 就是 `Image.width/height`；同组 rect 必须逐像素同规格；`Trials.ICON_W/H[i]`＝`tree.png` 帧包围盒**精确值**。（`verify_trial_icons.py`）
