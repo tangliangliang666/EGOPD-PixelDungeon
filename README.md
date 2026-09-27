@@ -11,8 +11,7 @@ EGOPD 是个人向的 Shattered Pixel Dungeon 改版，主要新增内容：
 - **自定义武器与角色**：环指大师、爱慕神器、溶解之爱、粉色史莱姆等 EGO 系列内容
 - **考验（Trials）系统**：与官方 Challenges 平行独立的第二套难度修饰，共 10 类，对应卡巴拉生命之树的
   十个质点（KETER / CHOKHMAH / BINAH / CHESED / GEBURA / TIPHERETH / NETZACH / HOD / YESOD / MALKUTH）
-- **自定义道具与机制**：雷德之证、调试控制台，以及移植自其他改版的内容（如 7 种可食用蘑菇）
-- **完整中文本地化**：`core/src/main/assets/messages/*_zh.properties`
+- **自定义道具与机制**：调试控制台以及移植自其他改版的内容（如 7 种可食用蘑菇）
 
 ## 编译
 
@@ -39,6 +38,7 @@ EGOPD 是个人向的 Shattered Pixel Dungeon 改版，主要新增内容：
 ## 许可与致谢
 
 本项目以 **GNU GPLv3** 发布（见 [`LICENSE.txt`](LICENSE.txt)），与原版保持一致。
+本项目包含大量AI编程内容。
 
 - 原版 **Shattered Pixel Dungeon** 版权归 [Evan Debenham (00-Evan)](https://shatteredpixel.com/) 所有，
   其本身基于 [Watabou](https://watabou.itch.io/) 的 Pixel Dungeon 源码。
@@ -47,7 +47,7 @@ EGOPD 是个人向的 Shattered Pixel Dungeon 改版，主要新增内容：
   （如《边狱公司》相关音频，来源于社区 wiki），版权归各自权利人所有，仅用于个人学习与非商业用途，
   **不适用 GPLv3**。若权利人提出异议，将立即移除相关文件。
 - 本仓库为个人改版备份，**不接受 Pull Request**；欢迎提交 Issue。
-
+- 本项目的爱发电：https://ifdian.net/a/EGOPD
 ---
 
 > 以下为原版 Shattered Pixel Dungeon 的 README 原文。
